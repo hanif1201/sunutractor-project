@@ -12,6 +12,7 @@ import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import React, { useState } from "react";
 import { images } from "../../constants";
+import { createUser } from "../../lib/appwrite";
 
 const signUp = () => {
   const [isSubmitting, setSubmitting] = useState(false);
@@ -21,22 +22,24 @@ const signUp = () => {
     password: "",
   });
   const submit = async () => {
-    if (form.username === "" || form.email === "" || form.password === "") {
-      Alert.alert("Error", "Please fill in all fields");
-    }
+    // if (form.username === "" || form.email === "" || form.password === "") {
+    //   Alert.alert("Error", "Please fill in all fields");
+    // }
 
-    setSubmitting(true);
-    try {
-      const result = await createUser(form.email, form.password, form.username);
-      setUser(result);
-      setIsLogged(true);
+    // setSubmitting(true);
+    // try {
+    //   const result = await createUser(form.email, form.password, form.username);
+    //   setUser(result);
+    //   setIsLogged(true);
 
-      router.replace("/home");
-    } catch (error) {
-      Alert.alert("Error", error.message);
-    } finally {
-      setSubmitting(false);
-    }
+    //   router.replace("/home");
+    // } catch (error) {
+    //   Alert.alert("Error", error.message);
+    // } finally {
+    //   setSubmitting(false);
+    // }
+
+    createUser();
   };
   return (
     <SafeAreaView className='bg-white h-full '>
