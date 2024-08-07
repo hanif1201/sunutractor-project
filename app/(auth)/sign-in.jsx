@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   Dimensions,
+  Alert,
 } from "react-native";
 import { Link, router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -12,10 +13,11 @@ import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import React, { useState } from "react";
 import { images } from "../../constants";
-import { createUser } from "../../lib/appwrite";
+import { getCurrentUser, signIn } from "../../lib/appwrite";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
-const signIn = () => {
-  // const { setUser, setIsLogged } = useGlobalContext();
+const SignIn = () => {
+  const { setUser, setIsLogged } = useGlobalContext();
   const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     email: "",
@@ -32,8 +34,8 @@ const signIn = () => {
     try {
       await signIn(form.email, form.password);
       const result = await getCurrentUser();
-      // setUser(result);
-      // setIsLogged(true);
+      setUser(result);
+      setIsLogged(true);
 
       Alert.alert("Success", "User signed in successfully");
       router.replace("/home");
@@ -42,8 +44,6 @@ const signIn = () => {
     } finally {
       setSubmitting(false);
     }
-
-    createUser();
   };
 
   return (
@@ -125,4 +125,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default signIn;
+export default SignIn;

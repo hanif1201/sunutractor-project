@@ -14,8 +14,10 @@ import CustomButton from "../../components/CustomButton";
 import React, { useState } from "react";
 import { images } from "../../constants";
 import { createUser } from "../../lib/appwrite";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
-const signUp = () => {
+const SignUp = () => {
+  const { setUser, setIsLogged } = useGlobalContext();
   const [isSubmitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     username: "",
@@ -30,8 +32,8 @@ const signUp = () => {
     setSubmitting(true);
     try {
       const result = await createUser(form.email, form.password, form.username);
-      // setUser(result);
-      // setIsLogged(true);
+      setUser(result);
+      setIsLogged(true);
 
       router.replace("/home");
     } catch (error) {
@@ -120,4 +122,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default signUp;
+export default SignUp;
