@@ -15,6 +15,7 @@ import house from "../assets/icons/house-solid.png";
 import heart from "../assets/icons/heart-regular.png";
 import add from "../assets/icons/Vector.png";
 import message from "../assets/icons/message.png";
+import location from "../assets/icons/location.png";
 
 export default {
   play,
@@ -34,4 +35,5 @@ export default {
   heart,
   message,
   add,
+  location,
 };

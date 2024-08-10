@@ -6,10 +6,16 @@ import {
   ScrollView,
   TextInput,
   Image,
+  TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
+// import heart from "../../assets/icons/heart-regular.png";
+import icons from "../../constants/icons";
+import images from "../../constants/images";
 
 const home = () => {
+  const handlePress = () => {};
   const [searchQuery, setSearchQuery] = useState("");
   const categories = [
     { name: "All", image: "https://via.placeholder.com/150" },
@@ -110,15 +116,41 @@ const home = () => {
                 source={{ uri: tractor.image }}
                 className='w-full h-24 rounded'
               />
-              <View className='flex flex-row'>
-                <Text className='text-start mt-1 font-bold text-lg'>
+              <View className='flex flex-row justify-between items-center pr-2'>
+                <Text className='text-start mt-1 font-semibold text-lg'>
                   {tractor.name}
                 </Text>
-                <Text className='text-start mt-2 text-sm'>{tractor.name}</Text>
+                <Image
+                  source={icons.heart}
+                  resizeMode='contain'
+                  style={{ width: 24, height: 24, tintColor: "#000" }}
+                />
               </View>
               <View>
-                <Text className='text-start mt-1'>{tractor.price}</Text>
+                <Text className='text-start mt-1 font-bold text-sm'>
+                  {tractor.price}/hr
+                </Text>
               </View>
+              <View className='flex flex-row items-center'>
+                <Image
+                  source={icons.location}
+                  resizeMode='contain'
+                  style={{ width: 16, height: 16, tintColor: "#000" }}
+                />
+                <Text className='text-start mt-1 font-bold text-sm'>
+                  {tractor.location}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={handlePress}
+                activeOpacity={0.7}
+                className='bg-primary rounded-md min-h-[42px] flex flex-row justify-center items-center mt-4 py-2 mx-1 mb-1 '
+              >
+                <Text className={`text-white font-psemibold `}>
+                  Check Detail
+                </Text>
+                {/* <ActivityIndicator color='#fff' size='small' className='ml-2' /> */}
+              </TouchableOpacity>
             </View>
           ))}
         </View>

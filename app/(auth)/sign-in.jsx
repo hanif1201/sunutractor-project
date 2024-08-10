@@ -103,10 +103,6 @@ const SignIn = () => {
               Signup
             </Link>
           </View>
-
-          <Link href='/home' className='text-lg font-psemibold text-secondary'>
-            Home
-          </Link>
         </View>
       </ScrollView>
     </SafeAreaView>
