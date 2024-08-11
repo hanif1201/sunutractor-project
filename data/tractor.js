@@ -1,0 +1,92 @@
+export const tractor = [
+  {
+    id: 1,
+    name: "John Deere 6120M",
+    description:
+      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    image: "https://via.placeholder.com/150",
+    location: "Kampala",
+    price: "UGX 10,000",
+    rating: 4,
+    reviews: 20,
+    isAvailable: true,
+    owner: {
+      name: "John Doe",
+      image: "https://via.placeholder.com/150",
+      contract: 5,
+      ads: 10,
+    },
+  },
+  {
+    id: 2,
+    name: "Massey Ferguson 4708",
+    description:
+      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    image: "https://via.placeholder.com/150",
+    location: "Kampala",
+    price: "UGX 20,000",
+    rating: 4,
+    reviews: 20,
+    isAvailable: true,
+    owner: {
+      name: "John Doe",
+      image: "https://via.placeholder.com/150",
+      contract: 5,
+      ads: 10,
+    },
+  },
+  {
+    id: 3,
+    name: "New Holland T7.270",
+    description:
+      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    image: "https://via.placeholder.com/150",
+    location: "Kampala",
+    price: "UGX 30,000",
+    rating: 4,
+    reviews: 20,
+    isAvailable: true,
+    owner: {
+      name: "John Doe",
+      image: "https://via.placeholder.com/150",
+      contract: 5,
+      ads: 10,
+    },
+  },
+  {
+    id: 4,
+    name: "Case IH Puma 240 CVX",
+    description:
+      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    image: "https://via.placeholder.com/150",
+    location: "Kampala",
+    price: "UGX 40,000",
+    rating: 4,
+    reviews: 20,
+    isAvailable: true,
+    owner: {
+      name: "John Doe",
+      image: "https://via.placeholder.com/150",
+      contract: 5,
+      ads: 10,
+    },
+  },
+  {
+    id: 5,
+    name: "Fendt 1050 Vario",
+    description:
+      "lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+    image: "https://via.placeholder.com/150",
+    location: "Kampala",
+    price: "UGX 50,000",
+    rating: 4,
+    reviews: 20,
+    isAvailable: true,
+    owner: {
+      name: "John Doe",
+      image: "https://via.placeholder.com/150",
+      contract: 5,
+      ads: 10,
+    },
+  },
+];

@@ -13,65 +13,20 @@ import React, { useState } from "react";
 // import heart from "../../assets/icons/heart-regular.png";
 import icons from "../../constants/icons";
 import images from "../../constants/images";
+import { tractor } from "../../data/tractor";
+import { useNavigation } from "@react-navigation/native";
 
 const home = () => {
-  const handlePress = () => {};
+  const navigation = useNavigation();
+
+  const handlePress = (id) => {
+    navigation.navigate("TractorDetailsScreen", { id });
+  };
   const [searchQuery, setSearchQuery] = useState("");
   const categories = [
     { name: "All", image: "https://via.placeholder.com/150" },
     { name: "Tractors", image: "https://via.placeholder.com/150" },
     { name: "Home & Garden", image: "https://via.placeholder.com/150" },
-  ];
-
-  const tractors = [
-    {
-      name: "Tractor 1",
-      image: "https://via.placeholder.com/150",
-      location: "Kampala",
-      price: "UGX 100,000",
-      rating: 4,
-      reviews: 20,
-    },
-    {
-      name: "Tractor 2",
-      image: "https://via.placeholder.com/150",
-      location: "Kampala",
-      price: "UGX 100,000",
-      rating: 4,
-      reviews: 20,
-    },
-    {
-      name: "Tractor 3",
-      image: "https://via.placeholder.com/150",
-      location: "Kampala",
-      price: "UGX 100,000",
-      rating: 4,
-      reviews: 20,
-    },
-    {
-      name: "Tractor 4",
-      image: "https://via.placeholder.com/150",
-      location: "Kampala",
-      price: "UGX 100,000",
-      rating: 4,
-      reviews: 20,
-    },
-    {
-      name: "Tractor 5",
-      image: "https://via.placeholder.com/150",
-      location: "Kampala",
-      price: "UGX 100,000",
-      rating: 4,
-      reviews: 20,
-    },
-    {
-      name: "Tractor 6",
-      image: "https://via.placeholder.com/150",
-      location: "Kampala",
-      price: "UGX 100,000",
-      rating: 4,
-      reviews: 20,
-    },
   ];
 
   return (
@@ -110,14 +65,17 @@ const home = () => {
         </View>
 
         <View className='flex flex-row flex-wrap justify-around mt-4 mb-40'>
-          {tractors.map((tractor, index) => (
-            <View key={index} className='w-[170px] m-1 border-black border-2'>
+          {tractor.map((tractor, index) => (
+            <View
+              key={index}
+              className='w-full  min-h-[300px] m-1 border-black border-2'
+            >
               <Image
                 source={{ uri: tractor.image }}
-                className='w-full h-24 rounded'
+                className='w-full h-52 rounded'
               />
               <View className='flex flex-row justify-between items-center pr-2'>
-                <Text className='text-start mt-1 font-semibold text-lg'>
+                <Text className='text-start mt-1 font-semibold text-lg w-4/5'>
                   {tractor.name}
                 </Text>
                 <Image
@@ -142,7 +100,12 @@ const home = () => {
                 </Text>
               </View>
               <TouchableOpacity
-                onPress={handlePress}
+                key={tractor.id}
+                onPress={() =>
+                  navigation.navigate("tractor/[tractorId]", {
+                    tractorId: tractor.id,
+                  })
+                }
                 activeOpacity={0.7}
                 className='bg-primary rounded-md min-h-[42px] flex flex-row justify-center items-center mt-4 py-2 mx-1 mb-1 '
               >
