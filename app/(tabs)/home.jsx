@@ -33,7 +33,7 @@ const home = () => {
     <SafeAreaView className=' mt-12  h-full '>
       <View className='px-4 mb-4 mt-4'>
         <TextInput
-          className='h-10 border border-gray-300 rounded px-3'
+          className='h-10 border border-gray-300 rounded px-3 font-pregular'
           placeholder='What would you like to rent??'
           value={searchQuery}
           onChangeText={setSearchQuery}
@@ -41,8 +41,8 @@ const home = () => {
       </View>
       <ScrollView className='px-4'>
         <View className='flex flex-row justify-between'>
-          <Text className='text-lg font-bold'>Categories</Text>
-          <Text className='text-blue-500'>See all</Text>
+          <Text className='text-lg font-pbold'>Categories</Text>
+          <Text className='text-blue-500 font-pregular'>See all</Text>
         </View>
         <View className='flex flex-row flex-wrap justify-between mt-4'>
           {categories.map((category, index) => (
@@ -51,7 +51,9 @@ const home = () => {
                 source={{ uri: category.image }}
                 className='w-full h-24 rounded'
               />
-              <Text className='text-center mt-2'>{category.name}</Text>
+              <Text className='text-center mt-2 font-pregular'>
+                {category.name}
+              </Text>
             </View>
           ))}
         </View>
@@ -60,8 +62,8 @@ const home = () => {
           <Text className='text-blue-500'>See all</Text>
         </View> */}
         <View className='flex flex-row justify-between'>
-          <Text className='text-lg font-bold'>Recommended For You</Text>
-          <Text className='text-blue-500'>See all</Text>
+          <Text className='text-lg font-pbold'>Recommended For You</Text>
+          <Text className='text-blue-500 font-pregular'>See all</Text>
         </View>
 
         <View className='flex flex-row flex-wrap justify-around mt-4 mb-40'>
@@ -75,7 +77,7 @@ const home = () => {
                 className='w-full h-52 rounded'
               />
               <View className='flex flex-row justify-between items-center pr-2'>
-                <Text className='text-start mt-1 font-semibold text-lg w-4/5'>
+                <Text className='text-start mt-1 font-psemibold text-lg w-4/5'>
                   {tractor.name}
                 </Text>
                 <Image
@@ -85,7 +87,7 @@ const home = () => {
                 />
               </View>
               <View>
-                <Text className='text-start mt-1 font-bold text-sm'>
+                <Text className='text-start mt-1 font-pbold text-sm'>
                   {tractor.price}/hr
                 </Text>
               </View>
@@ -95,7 +97,7 @@ const home = () => {
                   resizeMode='contain'
                   style={{ width: 16, height: 16, tintColor: "#000" }}
                 />
-                <Text className='text-start mt-1 font-bold text-sm'>
+                <Text className='text-start mt-1 font-pbold text-sm'>
                   {tractor.location}
                 </Text>
               </View>

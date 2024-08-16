@@ -16,6 +16,9 @@ import heart from "../assets/icons/heart-regular.png";
 import add from "../assets/icons/Vector.png";
 import message from "../assets/icons/message.png";
 import location from "../assets/icons/location.png";
+import question from "../assets/icons/question.png";
+import right from "../assets/icons/chevron-right.png";
+import circle from "../assets/icons/circle-check.png";
 
 export default {
   play,
@@ -36,4 +39,7 @@ export default {
   message,
   add,
   location,
+  question,
+  right,
+  circle,
 };

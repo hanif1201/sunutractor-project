@@ -3,6 +3,7 @@ import { useFonts } from "expo-font";
 // import "react-native-url-polyfill/auto";
 import { SplashScreen, Stack } from "expo-router";
 import GlobalProvider from "../context/GlobalProvider";
+import OwnerDetails from "./tractor/OwnerDetails";
 
 export default function RootLayout() {
   // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -43,6 +44,10 @@ export default function RootLayout() {
         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
         <Stack.Screen
           name='tractor/[tractorId]'
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='tractor/OwnerDetails'
           options={{ headerShown: false }}
         />
       </Stack>
