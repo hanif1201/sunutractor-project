@@ -8,6 +8,7 @@ import {
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
+import LocationDropdown from "../../components/LocationDropdown";
 
 const add = () => {
   const [uploading, setUploading] = useState(false);
@@ -37,6 +38,7 @@ const add = () => {
             handleChangeText={(e) => setForm({ ...form, description: e })}
             otherStyles='mt-10  '
           />
+          <LocationDropdown />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -44,5 +46,3 @@ const add = () => {
 };
 
 export default add;
-
-const styles = StyleSheet.create({});
