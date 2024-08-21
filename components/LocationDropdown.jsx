@@ -1,26 +1,29 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
-import { location } from "../data/location"; // Assuming the location data is in a file named location.js in the same folder
+import { location } from "../data/location";
 
-const LocationDropdown = () => {
-  const [selectedRegion, setSelectedRegion] = useState(null);
-  const [selectedDistrict, setSelectedDistrict] = useState(null);
-  const [selectedVillage, setSelectedVillage] = useState(null);
+const LocationDropdown = ({ onLocationChange, location }) => {
+  const [selectedRegion, setSelectedRegion] = useState(location.region);
+  const [selectedDistrict, setSelectedDistrict] = useState(location.district);
+  const [selectedVillage, setSelectedVillage] = useState(location.village);
 
   const handleRegionChange = (item) => {
-    setSelectedRegion(item);
-    setSelectedDistrict(null);
-    setSelectedVillage(null);
+    setSelectedRegion(item.value);
+    setSelectedDistrict("");
+    setSelectedVillage("");
+    onLocationChange({ region: item.value });
   };
 
   const handleDistrictChange = (item) => {
-    setSelectedDistrict(item);
-    setSelectedVillage(null);
+    setSelectedDistrict(item.value);
+    setSelectedVillage("");
+    onLocationChange({ district: item.value });
   };
 
   const handleVillageChange = (item) => {
-    setSelectedVillage(item);
+    setSelectedVillage(item.value);
+    onLocationChange({ village: item.value });
   };
 
   const regionOptions = location.map((region) => ({
@@ -51,14 +54,15 @@ const LocationDropdown = () => {
     : [];
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} className='mt-6'>
+      <Text className='font-pmedium text-lg'>Tractor Location </Text>
       <Dropdown
         data={regionOptions}
         labelField='label'
         valueField='value'
         placeholder='Select Region'
         value={selectedRegion}
-        onChange={(item) => handleRegionChange(item.value)}
+        onChange={(item) => handleRegionChange(item)}
         style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
@@ -70,7 +74,7 @@ const LocationDropdown = () => {
         valueField='value'
         placeholder='Select District'
         value={selectedDistrict}
-        onChange={(item) => handleDistrictChange(item.value)}
+        onChange={(item) => handleDistrictChange(item)}
         style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
@@ -82,7 +86,7 @@ const LocationDropdown = () => {
         valueField='value'
         placeholder='Select Village'
         value={selectedVillage}
-        onChange={(item) => handleVillageChange(item.value)}
+        onChange={(item) => handleVillageChange(item)}
         style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
@@ -95,13 +99,13 @@ const LocationDropdown = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#f8f8f8",
+    padding: 4,
+    // backgroundColor: "#f8f8f8",
   },
   dropdown: {
     height: 50,
-    borderColor: "gray",
-    borderWidth: 1,
+    borderColor: "black",
+    borderWidth: 2,
     borderRadius: 8,
     paddingHorizontal: 8,
     marginBottom: 16,

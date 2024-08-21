@@ -1,0 +1,79 @@
+Classified: Tractors can be classified by their intended use and whether they have wheels or tracks
+
+Agricultural tractors
+
+These tractors are comfortable and user-friendly, making them a good choice for large-scale farming.
+
+Industrial tractors
+
+These tractors can be used in construction or agriculture to move heavy loads.
+
+Garden tractors
+
+These tractors can be used for cutting grass or planting flower beds.
+
+Rotary tillers
+
+These tractors are useful for small farms or farms at different elevations.
+
+Compact tractors
+
+These tractors are designed for landscaping tasks like mowing and tilling, even on uneven terrain. They are under 50 horsepower and use lighter-weight attachments.
+
+Row crop tractors
+
+These tractors are designed for growing crops like corn, soybeans, and potatoes. They have high ground clearance to avoid damaging crops and a narrow build to move easily between rows.
+
+Orchard tractors
+
+These tractors are best for fruit and nut orchards and have a low profile to avoid damaging overhanging branches.
+
+Loader tractors
+
+These tractors usually have wheels or tracks and a front-mounted bucket to scoop up loose material like dirt, sand, or gravel.
+
+Type of tractor: for example, 35-39 hp tractor
+
+Specification: for example
+
+                Make: John Deere
+
+                Model: 3033
+
+                Dimensions: 153” L x 61” W x 83” H
+
+                Power Source: 31 HP diesel
+
+                Transmission: Hydrostatic
+
+                Weight: 3,750 lbs
+
+Location of the tractor: Where is the tractor located
+
+
+
+/////////////
+
+That is no problem. Thank you for letting me know.
+
+I want to make sure you have a few things. Every tractor has an operator; the owner may not necessarily be the operator. That is why when they register the tractor, they need to have an option to add an operator. Below are the steps to add an operator while adding a tractor.
+
+Do you have an operator for this tractor? Yes/No
+If they select Yes, a form should be displayed asking for the operator's information:
+       operator Name
+       phone number
+       Email if available
+
+if they select No, they should see another question 
+Would you like SUNUTractor to provide an operator?
+If they select yes, Display this message: " SUNUTractor will provide an operator. Thank you for registering your tractor."
+
+If they select No, ask them another question
+Will you be operating the tractor? Yes/No
+if they select yes, display this message: "Thank you for registering your tractor."
+
+If No, Display this error message: " You will need an operator for your tractor."
+
+Keep the form open so they can select something.
+
+Thank you.
