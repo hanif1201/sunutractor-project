@@ -6,7 +6,9 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
 import React, { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,6 +16,7 @@ import FormField from "../../components/FormField";
 import LocationDropdown from "../../components/LocationDropdown";
 import { location } from "../../data/location";
 import icons from "../../constants/icons";
+import CustomButton from "../../components/CustomButton";
 
 const add = () => {
   const [uploading, setUploading] = useState(false);
@@ -26,14 +29,19 @@ const add = () => {
     location: null,
     isAvailable: false,
     price: "",
+    hasOperator: null,
     operatorName: "",
     operatorPhone: "",
     operatorEmail: "",
   });
+  const [isSubmitting, setSubmitting] = useState(false);
   const [isAvailable, setIsAvailable] = useState(false);
   const [hasOperator, setHasOperator] = useState(null);
+  const [hasHireOperator, setHasHireOperator] = useState(null);
+  const [hasHireOperating, setHasHireOperating] = useState(null);
   const [sunuTractorOperator, setSunuTractorOperator] = useState(null);
   const [ownerOperator, setOwnerOperator] = useState(null);
+  const submit = () => {};
 
   const handleLocationChange = (locationData) => {
     setForm({ ...form, location: { ...form.location, ...locationData } });
@@ -43,6 +51,29 @@ const add = () => {
     setIsAvailable(!isAvailable);
     setForm({ ...form, isAvailable: !form.isAvailable });
   };
+
+  const handleHasOperator = (value) => {
+    setHasOperator(value);
+    setForm({ ...form, hasOperator: value });
+  };
+
+  const handleHasHireOperator = (value) => {
+    setHasHireOperator(value);
+    setForm({ ...form, hasHireOperator: value });
+  };
+  const handleHasHireOperating = (value) => {
+    setHasHireOperating(value);
+    setForm({ ...form, hasHireOperating: value });
+  };
+
+  const operatorOptions = [
+    { label: "Yes", value: "yes" },
+    { label: "No", value: "no" },
+  ];
+  const operatorHireOptions = [
+    { label: "Yes", value: "yes" },
+    { label: "No", value: "no" },
+  ];
 
   return (
     <SafeAreaView className='bg-white h-full'>
@@ -138,10 +169,136 @@ const add = () => {
               style={{ marginLeft: 8 }}
             />
           </View>
+
+          <View>
+            <Text className='font-pmedium text-lg'>
+              Do you have an operator for your tractor
+            </Text>
+            <Dropdown
+              data={operatorOptions}
+              labelField='label'
+              valueField='value'
+              placeholder='Select Option'
+              value={hasOperator}
+              onChange={(item) => handleHasOperator(item.value)}
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              containerStyle={styles.dropdownContainer}
+            />
+          </View>
+
+          {hasOperator === "yes" && (
+            <View>
+              <FormField
+                title='Operator Name'
+                value={form.operatorName}
+                placeholder="Kinldy fill in the Operator's name"
+                handleChangeText={(e) => setForm({ ...form, operatorName: e })}
+                otherStyles='mt-10'
+              />
+              <FormField
+                title='Operator Phone'
+                value={form.operatorPhone}
+                placeholder="Kindly fill in the Operator's phone number"
+                handleChangeText={(e) => setForm({ ...form, operatorPhone: e })}
+                otherStyles='mt-10'
+              />
+              <FormField
+                title='Operator Email'
+                value={form.operatorEmail}
+                placeholder="Kindly fill in the Operator's email"
+                handleChangeText={(e) => setForm({ ...form, operatorEmail: e })}
+                otherStyles='mt-10'
+              />
+            </View>
+          )}
+          {hasOperator === "no" && (
+            <View>
+              <Text className='font-pmedium text-lg'>
+                Will you like to hire an operator from Sunu Tractor?
+              </Text>
+              <Dropdown
+                data={operatorHireOptions}
+                labelField='label'
+                valueField='value'
+                placeholder='Select Option'
+                value={hasHireOperator}
+                onChange={(item) => handleHasHireOperator(item.value)}
+                style={styles.dropdown}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                containerStyle={styles.dropdownContainer}
+              />
+            </View>
+          )}
+          {hasHireOperator === "yes" &&
+            Alert.alert(
+              "SUNUTractor will provide an operator. Thank you for registering your tractor."
+            )}
+          {hasHireOperator === "no" && (
+            <View>
+              <Text className='font-pmedium text-lg'>
+                Will you be operating the tractor?
+              </Text>
+              <Dropdown
+                data={operatorHireOptions}
+                labelField='label'
+                valueField='value'
+                placeholder='Select Option'
+                value={hasHireOperating}
+                onChange={(item) => handleHasHireOperating(item.value)}
+                style={styles.dropdown}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                containerStyle={styles.dropdownContainer}
+              />
+            </View>
+          )}
+          {hasHireOperating === "yes" &&
+            Alert.alert(
+              "Thank you for registering your tractor. You will be operating the tractor."
+            )}
+          {hasHireOperating === "no" &&
+            Alert.alert("You will need an operator for your tractor!!")}
         </View>
+
+        <CustomButton
+          title={isSubmitting ? "Submitting..." : "Submit"}
+          handlePress={submit}
+          isLoading={isSubmitting}
+        />
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 4,
+    // backgroundColor: "#f8f8f8",
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "black",
+    borderWidth: 2,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    marginBottom: 16,
+    backgroundColor: "white",
+  },
+  placeholderStyle: {
+    color: "gray",
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    color: "black",
+    fontSize: 16,
+  },
+  dropdownContainer: {
+    borderRadius: 8,
+  },
+});
 
 export default add;
