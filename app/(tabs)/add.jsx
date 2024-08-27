@@ -8,6 +8,7 @@ import {
   Image,
   Alert,
 } from "react-native";
+import * as DocumentPicker from "expo-document-picker";
 import { Dropdown } from "react-native-element-dropdown";
 import React, { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
@@ -17,12 +18,14 @@ import LocationDropdown from "../../components/LocationDropdown";
 import { location } from "../../data/location";
 import icons from "../../constants/icons";
 import CustomButton from "../../components/CustomButton";
+import { createTractor } from "../../lib/appwrite";
 
 const add = () => {
   const [uploading, setUploading] = useState(false);
   const [form, setForm] = useState({
     make: "",
     model: "",
+    thumbnail: null,
     powerSource: "",
     transmission: "",
 
@@ -34,6 +37,35 @@ const add = () => {
     operatorPhone: "",
     operatorEmail: "",
   });
+
+  const openPicker = async (selectType) => {
+    const result = await DocumentPicker.getDocumentAsync({
+      type:
+        selectType === "image"
+          ? ["image/png", "image/jpg"]
+          : ["video/mp4", "video/gif"],
+    });
+
+    if (!result.canceled) {
+      if (selectType === "image") {
+        setForm({
+          ...form,
+          thumbnail: result.assets[0],
+        });
+      }
+
+      if (selectType === "video") {
+        setForm({
+          ...form,
+          video: result.assets[0],
+        });
+      }
+    } else {
+      setTimeout(() => {
+        Alert.alert("Document picked", JSON.stringify(result, null, 2));
+      }, 100);
+    }
+  };
   const [isSubmitting, setSubmitting] = useState(false);
   const [isAvailable, setIsAvailable] = useState(false);
   const [hasOperator, setHasOperator] = useState(null);
@@ -41,7 +73,35 @@ const add = () => {
   const [hasHireOperating, setHasHireOperating] = useState(null);
   const [sunuTractorOperator, setSunuTractorOperator] = useState(null);
   const [ownerOperator, setOwnerOperator] = useState(null);
-  const submit = () => {};
+  const submit = async () => {
+    try {
+      const tractorData = {
+        make: form.make,
+        model: form.model,
+        thumbnail: form.thumbnail,
+        powerSource: form.powerSource,
+        transmission: form.transmission,
+        // location: form.location,
+        isAvailable: form.isAvailable,
+        price: form.price,
+        region: form.location.region,
+        district: form.location.district,
+        village: form.location.village,
+
+        hasOperator: form.hasOperator,
+        operatorName: form.operatorName,
+        operatorPhone: form.operatorPhone,
+        operatorEmail: form.operatorEmail,
+      };
+
+      const newTractor = await createTractor(tractorData); // Call the createTractor function
+      console.log(newTractor);
+
+      // Redirect to the tractors list page or display a success message
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleLocationChange = (locationData) => {
     setForm({ ...form, location: { ...form.location, ...locationData } });

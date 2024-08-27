@@ -12,18 +12,26 @@ const LocationDropdown = ({ onLocationChange, location }) => {
     setSelectedRegion(item.value);
     setSelectedDistrict("");
     setSelectedVillage("");
-    onLocationChange({ region: item.value });
+    onLocationChange({ region: item.value, district: "", village: "" });
   };
 
   const handleDistrictChange = (item) => {
     setSelectedDistrict(item.value);
     setSelectedVillage("");
-    onLocationChange({ district: item.value });
+    onLocationChange({
+      region: selectedRegion,
+      district: item.value,
+      village: "",
+    });
   };
 
   const handleVillageChange = (item) => {
     setSelectedVillage(item.value);
-    onLocationChange({ village: item.value });
+    onLocationChange({
+      region: selectedRegion,
+      district: selectedDistrict,
+      village: item.value,
+    });
   };
 
   const regionOptions = location.map((region) => ({
