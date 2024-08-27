@@ -15,10 +15,13 @@ import icons from "../../constants/icons";
 import images from "../../constants/images";
 import { tractor } from "../../data/tractor";
 import { useNavigation } from "@react-navigation/native";
+import useAppwrite from "../../lib/useAppwrite";
 import { getAllTractors } from "../../lib/appwrite";
 
 const home = () => {
-  const { data: tractors, refetch } = useAppwrite(getAllPosts);
+  const { data: tractors, refetch } = useAppwrite(getAllTractors);
+  console.log(tractors);
+
   const navigation = useNavigation();
 
   const handlePress = (id) => {
@@ -30,6 +33,16 @@ const home = () => {
     { name: "Tractors", image: "https://via.placeholder.com/150" },
     { name: "Home & Garden", image: "https://via.placeholder.com/150" },
   ];
+
+  console.log("tractors:", tractors);
+  console.log("is array:", Array.isArray(tractors));
+  if (tractors) {
+    tractors.map((tractor) => {
+      // your code here
+    });
+  } else {
+    console.error("tractors is null or undefined");
+  }
 
   return (
     <SafeAreaView className=' mt-12  h-full '>
@@ -69,7 +82,7 @@ const home = () => {
         </View>
 
         <View className='flex flex-row flex-wrap justify-around mt-4 mb-40'>
-          {tractor.map((tractor, index) => (
+          {tractors.map((tractor, index) => (
             <View
               key={index}
               className='w-full  min-h-[300px] m-1 border-black border-2'

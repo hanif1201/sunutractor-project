@@ -95,7 +95,7 @@ const add = () => {
       };
 
       const newTractor = await createTractor(tractorData); // Call the createTractor function
-      console.log(newTractor);
+      // console.log(newTractor);
       Alert.alert("Success", "Post uploaded successfully");
       router.push("/home");
 
