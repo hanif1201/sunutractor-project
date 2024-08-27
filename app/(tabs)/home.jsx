@@ -15,8 +15,10 @@ import icons from "../../constants/icons";
 import images from "../../constants/images";
 import { tractor } from "../../data/tractor";
 import { useNavigation } from "@react-navigation/native";
+import { getAllTractors } from "../../lib/appwrite";
 
 const home = () => {
+  const { data: tractors, refetch } = useAppwrite(getAllPosts);
   const navigation = useNavigation();
 
   const handlePress = (id) => {

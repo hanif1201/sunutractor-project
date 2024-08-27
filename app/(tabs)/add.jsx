@@ -96,6 +96,8 @@ const add = () => {
 
       const newTractor = await createTractor(tractorData); // Call the createTractor function
       console.log(newTractor);
+      Alert.alert("Success", "Post uploaded successfully");
+      router.push("/home");
 
       // Redirect to the tractors list page or display a success message
     } catch (error) {
