@@ -17,6 +17,7 @@ import { tractor } from "../../data/tractor";
 import { useNavigation } from "@react-navigation/native";
 import useAppwrite from "../../lib/useAppwrite";
 import { getAllTractors } from "../../lib/appwrite";
+import { createRouter } from "expo-router";
 
 const home = () => {
   const { data: tractors, refetch } = useAppwrite(getAllTractors);
@@ -33,16 +34,6 @@ const home = () => {
     { name: "Tractors", image: "https://via.placeholder.com/150" },
     { name: "Home & Garden", image: "https://via.placeholder.com/150" },
   ];
-
-  console.log("tractors:", tractors);
-  console.log("is array:", Array.isArray(tractors));
-  if (tractors) {
-    tractors.map((tractor) => {
-      // your code here
-    });
-  } else {
-    console.error("tractors is null or undefined");
-  }
 
   return (
     <SafeAreaView className=' mt-12  h-full '>
@@ -88,12 +79,12 @@ const home = () => {
               className='w-full  min-h-[300px] m-1 border-black border-2'
             >
               <Image
-                source={{ uri: tractor.image }}
+                source={{ uri: tractor.thumbnail }}
                 className='w-full h-52 rounded'
               />
               <View className='flex flex-row justify-between items-center pr-2'>
                 <Text className='text-start mt-1 font-psemibold text-lg w-4/5'>
-                  {tractor.name}
+                  {tractor.make} {tractor.model}
                 </Text>
                 <Image
                   source={icons.heart}
@@ -113,14 +104,16 @@ const home = () => {
                   style={{ width: 16, height: 16, tintColor: "#000" }}
                 />
                 <Text className='text-start mt-1 font-pbold text-sm'>
-                  {tractor.location}
+                  {tractor.region}
+                  {tractor.district}
+                  {tractor.village}
                 </Text>
               </View>
               <TouchableOpacity
                 key={tractor.id}
                 onPress={() =>
                   navigation.navigate("tractor/[tractorId]", {
-                    tractorId: tractor.id,
+                    documentId: tractor.$id, // Pass the document ID
                   })
                 }
                 activeOpacity={0.7}

@@ -8,6 +8,7 @@ import {
   Image,
   Alert,
 } from "react-native";
+import { router } from "expo-router";
 import * as DocumentPicker from "expo-document-picker";
 import { Dropdown } from "react-native-element-dropdown";
 import React, { useState } from "react";

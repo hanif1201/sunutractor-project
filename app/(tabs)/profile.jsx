@@ -5,16 +5,40 @@ import {
   SafeAreaView,
   ScrollView,
   Image,
+  TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { router } from "expo-router";
 import images from "../../constants/images";
 import icons from "../../constants/icons";
+import { signOut } from "../../lib/appwrite";
+import { useGlobalContext } from "../../context/GlobalProvider";
+import { getCurrentUser, getTractorCountByUser } from "../../lib/appwrite";
 
 import tractor from "../../data/tractor";
 import { useRoute } from "@react-navigation/native";
 import CustomButton from "../../components/CustomButton";
 
 const profile = () => {
+  const { user, setUser, setIsLogged } = useGlobalContext();
+  const [tractorCount, setTractorCount] = useState(0);
+
+  useEffect(() => {
+    const fetchTractorCount = async () => {
+      try {
+        const user = await getCurrentUser();
+        if (user) {
+          const count = await getTractorCountByUser(user.$id);
+          setTractorCount(count);
+        }
+      } catch (error) {
+        console.error("Error fetching tractor count:", error);
+      }
+    };
+
+    fetchTractorCount();
+  }, []);
+
   // const route = useRoute();
   // const tractorId = route.params.tractorId;
   // const [tractorDetails, setTractorDetails] = useState({});
@@ -30,6 +54,13 @@ const profile = () => {
   //   return <ActivityIndicator />;
 
   // }
+  const logout = async () => {
+    await signOut();
+    setUser(null);
+    setIsLogged(false);
+
+    router.replace("/sign-in");
+  };
 
   const submit = () => {};
   return (
@@ -50,24 +81,29 @@ const profile = () => {
         </View>
         <View>
           {/* 001 */}
-          <View className='flex flex-row justify-between border-b-2 border-primary py-2'>
-            <View className='flex flex-row items-center'>
-              <Text className='font-pbold bg-primary text-white rounded-lg p-1'>
-                Ads
-              </Text>
-              <Text className='font-pbold text-lg ml-3'>My Ads</Text>
+          <TouchableOpacity
+            onPress={() => router.push("/tractor/UserTractorsScreen")}
+          >
+            <View className='flex flex-row justify-between border-b-2 border-primary py-2'>
+              <View className='flex flex-row items-center'>
+                <Text className='font-pbold bg-primary text-white rounded-lg p-1'>
+                  Ads
+                </Text>
+                <Text className='font-pbold text-lg ml-3'>My Tractors</Text>
+              </View>
+              <View className='flex flex-row items-center'>
+                <Text className='font-pbold text-lg ml-3'>{tractorCount}</Text>
+                <Text> Ads</Text>
+                <Image
+                  source={icons.right}
+                  resizeMode='contain'
+                  className='w-6 h-4 '
+                  style={{ tintColor: "#336431" }}
+                />
+              </View>
             </View>
-            <View className='flex flex-row items-center'>
-              <Text className='font-pbold text-lg ml-3'>8</Text>
-              <Text> Ads</Text>
-              <Image
-                source={icons.right}
-                resizeMode='contain'
-                className='w-6 h-4 '
-                style={{ tintColor: "#336431" }}
-              />
-            </View>
-          </View>
+          </TouchableOpacity>
+
           {/* 002 */}
           <View className='flex flex-row justify-between border-b-2 border-primary py-2'>
             <View className='flex flex-row items-center'>
@@ -116,7 +152,7 @@ const profile = () => {
               <Text className='font-pbold text-lg ml-3'>My Ads</Text>
             </View>
             <View className='flex flex-row items-center'>
-              <Text className='font-pbold text-lg ml-3'>8</Text>
+              <Text className='font-pbold text-lg ml-3'>{tractorCount}</Text>
               <Text> Ads</Text>
             </View>
           </View>
@@ -133,16 +169,18 @@ const profile = () => {
             </View>
           </View>
           {/* 006 */}
-          <View className='flex flex-row justify-between border-b-2 border-primary py-2'>
-            <View className='flex flex-row items-center'>
-              <Image
-                source={icons.logout}
-                resizeMode='contain'
-                className='w-6 h-6'
-              />
-              <Text className='font-pbold text-lg ml-3'>Log Out</Text>
+          <TouchableOpacity onPress={logout}>
+            <View className='flex flex-row justify-between border-b-2 border-primary py-2'>
+              <View className='flex flex-row items-center'>
+                <Image
+                  source={icons.logout}
+                  resizeMode='contain'
+                  className='w-6 h-6'
+                />
+                <Text className='font-pbold text-lg ml-3'>Log Out</Text>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>

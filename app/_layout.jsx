@@ -4,6 +4,7 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import GlobalProvider from "../context/GlobalProvider";
 import OwnerDetails from "./tractor/OwnerDetails";
+import TractorDetailsScreen from "./tractor/[tractorId]";
 
 export default function RootLayout() {
   // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -35,6 +36,7 @@ export default function RootLayout() {
   if (!fontsLoaded && !error) {
     return null;
   }
+
   return (
     <GlobalProvider>
       <Stack>
@@ -48,6 +50,10 @@ export default function RootLayout() {
         />
         <Stack.Screen
           name='tractor/OwnerDetails'
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='tractor/UserTractorsScreen'
           options={{ headerShown: false }}
         />
       </Stack>

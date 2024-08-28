@@ -1,7 +1,6 @@
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-
-import { useRoute } from "@react-navigation/native";
 import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 
 import CustomButton from "../../components/CustomButton";
 import {
@@ -9,6 +8,7 @@ import {
   SafeAreaView,
   Text,
   Image,
+  Alert,
   StyleSheet,
   Pressable,
   ActivityIndicator,
@@ -17,20 +17,27 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import icons from "../../constants/icons";
-import { tractor } from "../../data/tractor";
+import { getTractorById } from "../../lib/appwrite"; // Import the getTractorById function
 
 const TractorDetailsScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  const tractorId = route.params.tractorId;
-  const [tractorDetails, setTractorDetails] = useState({});
+  const { tractorId } = route.params;
+
+  const [tractorDetails, setTractorDetails] = useState(null);
 
   useEffect(() => {
-    const findTractor = tractor.find((item) => item.id === tractorId);
-    if (findTractor) {
-      setTractorDetails(findTractor);
-    }
-  }, [tractorId]);
+    const fetchTractorDetails = async () => {
+      try {
+        const tractor = await getTractorById(route.params.documentId); // Use the document ID
+        setTractorDetails(tractor);
+      } catch (error) {
+        console.error(error);
+        Alert.alert("Error", error.message);
+      }
+    };
+    fetchTractorDetails();
+  }, [route.params.documentId]);
 
   if (!tractorDetails) {
     return <ActivityIndicator />;
@@ -48,20 +55,21 @@ const TractorDetailsScreen = () => {
       <ScrollView className='mb-16'>
         <View className='flex flex-row justify-center items-center mx-5 mt-5'>
           <Image
-            source={{ uri: tractorDetails.image }}
+            source={{ uri: tractorDetails.thumbnail }}
             className='w-full h-72 rounded-lg'
           />
         </View>
         <View className='m-5 space-y-2'>
           <Text className='font-psemibold text-2xl '>Tractor Details</Text>
           <Text className='font-psemibold text-2xl '>
-            Model: {tractorDetails.name}
+            Model: {tractorDetails.make} {tractorDetails.model}
           </Text>
           <Text className='text-primary font-psemibold text-2xl'>
             Price: {tractorDetails.price}
           </Text>
           <Text className='font-psemibold text-xl '>
-            Location: {tractorDetails.location}
+            Location: {tractorDetails.region} {tractorDetails.district}{" "}
+            {tractorDetails.village}
           </Text>
           <Text className=' text-xl pb-4 font-pregular'>
             Description: {tractorDetails.description}
@@ -70,24 +78,16 @@ const TractorDetailsScreen = () => {
           {/* Add more details as needed */}
         </View>
         <TouchableOpacity
-          key={tractor.id}
-          onPress={() =>
-            navigation.navigate("tractor/OwnerDetails", {
-              ownerData: tractorDetails.owner,
-            })
-          }
+          key={tractorDetails.id} // Use tractorDetails.id instead of tractor.id
+          onPress={() => navigation.navigate("home")}
           activeOpacity={0.7}
           className='bg-primary rounded-md min-h-[42px] flex flex-row justify-center items-center  py-2 mx-2 mb-1 '
         >
           <Text className={`text-white font-psemibold `}>Contact Owner</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          key={tractor.id}
-          onPress={() =>
-            navigation.navigate("tractor/OwnerDetails", {
-              ownerData: tractorDetails.owner,
-            })
-          }
+          key={tractorDetails.id} // Use tractorDetails.id instead of tractor.id
+          onPress={() => navigation.navigate("home")}
           activeOpacity={0.7}
           className='bg-primary rounded-md min-h-[42px] flex flex-row justify-center items-center mt-4 py-2 mx-1 mb-1 '
         >
