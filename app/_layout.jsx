@@ -56,6 +56,10 @@ export default function RootLayout() {
           name='tractor/UserTractorsScreen'
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name='tractor/EditTractorDetails'
+          options={{ headerShown: false }}
+        />
       </Stack>
     </GlobalProvider>
   );
