@@ -21,7 +21,6 @@ import { createRouter } from "expo-router";
 
 const home = () => {
   const { data: tractors, refetch } = useAppwrite(getAllTractors);
-  console.log(tractors);
 
   const navigation = useNavigation();
 

@@ -14,14 +14,30 @@ import icons from "../../constants/icons";
 import { signOut } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { getCurrentUser, getTractorCountByUser } from "../../lib/appwrite";
+import { useNavigation } from "@react-navigation/native";
 
 import tractor from "../../data/tractor";
 import { useRoute } from "@react-navigation/native";
 import CustomButton from "../../components/CustomButton";
 
 const profile = () => {
+  const navigation = useNavigation();
   const { user, setUser, setIsLogged } = useGlobalContext();
   const [tractorCount, setTractorCount] = useState(0);
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await getCurrentUser();
+        setUserName(userData.username || "User");
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   useEffect(() => {
     const fetchTractorCount = async () => {
@@ -62,7 +78,9 @@ const profile = () => {
     router.replace("/sign-in");
   };
 
-  const submit = () => {};
+  const submit = () => {
+    router.push("/tractor/EditProfileScreen");
+  };
   return (
     <SafeAreaView className=' mt-12  h-full '>
       <ScrollView className='px-4'>
@@ -71,13 +89,15 @@ const profile = () => {
         </View>
         <View>
           <Text className=' text-2xl pb-4  mt-5 font-pbold flex justify-center items-center text-center'>
-            Welcome to Sunutractor, John
+            Welcome to Sunutractor, {userName}
           </Text>
-          <CustomButton
-            title='Edit Profile'
-            handlePress={submit}
-            containerStyles='my-7'
-          />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("tractor/EditProfileScreen")}
+            activeOpacity={0.7}
+            className='bg-primary rounded-md min-h-[42px] flex flex-row justify-center items-center mt-4 py-2 mx-1 mb-1 '
+          >
+            <Text className={`text-white font-psemibold `}>Edit Profile</Text>
+          </TouchableOpacity>
         </View>
         <View>
           {/* 001 */}

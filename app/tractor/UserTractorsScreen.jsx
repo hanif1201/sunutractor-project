@@ -14,6 +14,7 @@ import {
   getCurrentUser,
   deleteTractor,
 } from "../../lib/appwrite";
+import Loader from "../../components/Loader";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
 import icons from "../../constants/icons";
@@ -141,7 +142,7 @@ const UserTractorsScreen = () => {
   }, []);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <Loader isLoading={loading} />;
   }
 
   if (error) {

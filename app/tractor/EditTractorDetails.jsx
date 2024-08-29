@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import Loader from "../../components/Loader";
 import { getTractor, updateTractor } from "../../lib/appwrite";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
@@ -58,7 +59,7 @@ const EditTractorScreen = () => {
     }
   };
 
-  if (loading) return <Text>Loading...</Text>;
+  if (loading) return <Loader isLoading={loading} />;
   if (error) return <Text>Error: {error}</Text>;
   if (!tractor) return <Text>No tractor found</Text>;
 

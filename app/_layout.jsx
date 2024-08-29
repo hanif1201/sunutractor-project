@@ -60,6 +60,10 @@ export default function RootLayout() {
           name='tractor/EditTractorDetails'
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name='tractor/EditProfileScreen'
+          options={{ headerShown: false }}
+        />
       </Stack>
     </GlobalProvider>
   );
