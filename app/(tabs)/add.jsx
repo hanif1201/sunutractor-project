@@ -148,7 +148,7 @@ const add = () => {
         <View>
           <View className='mt-7 space-y-2'>
             <Text className='text-base text-black font-pmedium'>
-              Tractor Image
+              Tractor Image :
             </Text>
 
             <TouchableOpacity onPress={() => openPicker("image")}>
@@ -174,28 +174,28 @@ const add = () => {
             </TouchableOpacity>
           </View>
           <FormField
-            title='Tractor Make'
+            title='Tractor Make :'
             value={form.make}
             placeholder='What is the maker of your tractor?'
             handleChangeText={(e) => setForm({ ...form, make: e })}
             otherStyles='mt-10'
           />
           <FormField
-            title='Tractor Model'
+            title='Tractor Model :'
             value={form.model}
             placeholder='What is the model of your tractor?'
             handleChangeText={(e) => setForm({ ...form, model: e })}
             otherStyles='mt-10'
           />
           <FormField
-            title='Tractor Power Source'
+            title='Tractor Power Source :'
             value={form.powerSource}
             placeholder='What is the Power Source of your tractor?'
             handleChangeText={(e) => setForm({ ...form, powerSource: e })}
             otherStyles='mt-10'
           />
           <FormField
-            title='Tractor Transmission'
+            title='Tractor Transmission :'
             value={form.transmission}
             placeholder='What is the Power Transmission of your tractor?'
             handleChangeText={(e) => setForm({ ...form, transmission: e })}
@@ -203,7 +203,7 @@ const add = () => {
           />
 
           <FormField
-            title='Rental Price'
+            title='Rental Price :'
             value={form.price}
             placeholder='What is the rental price for the tractor per hour?'
             handleChangeText={(e) => {
@@ -235,7 +235,7 @@ const add = () => {
 
           <View>
             <Text className='font-pmedium text-lg'>
-              Do you have an operator for your tractor
+              Do you have an operator for your tractor?
             </Text>
             <Dropdown
               data={operatorOptions}
@@ -256,19 +256,19 @@ const add = () => {
               <FormField
                 title='Operator Name'
                 value={form.operatorName}
-                placeholder="Kinldy fill in the Operator's name"
+                placeholder="Kindly fill in the Operator's name"
                 handleChangeText={(e) => setForm({ ...form, operatorName: e })}
                 otherStyles='mt-10'
               />
               <FormField
-                title='Operator Phone'
+                title='Operator Phone :'
                 value={form.operatorPhone}
                 placeholder="Kindly fill in the Operator's phone number"
                 handleChangeText={(e) => setForm({ ...form, operatorPhone: e })}
                 otherStyles='mt-10'
               />
               <FormField
-                title='Operator Email'
+                title='Operator Email :'
                 value={form.operatorEmail}
                 placeholder="Kindly fill in the Operator's email"
                 handleChangeText={(e) => setForm({ ...form, operatorEmail: e })}

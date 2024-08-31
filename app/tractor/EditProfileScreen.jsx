@@ -13,6 +13,8 @@ import {
   getCurrentUser,
   updateUserProfile,
 } from "../../lib/appwrite";
+import FormField from "../../components/FormField";
+import CustomButton from "../../components/CustomButton";
 import { useRouter } from "expo-router";
 
 import { useNavigation } from "@react-navigation/native";
@@ -66,67 +68,48 @@ const EditProfileScreen = () => {
     );
 
   return (
-    <ScrollView className='px-4 mt-20 bg-primary'>
-      <Text style={styles.title}>Edit Profile</Text>
-      <TextInput
-        style={styles.input}
-        value={user.name || ""}
-        onChangeText={(text) => setUser({ ...user, name: text })}
-        placeholder='Name'
+    <ScrollView className='px-4 mt-20'>
+      <Text className='text-2xl text-primary font-psemibold mt-4 text-center'>
+        Edit your Profile
+      </Text>
+      {/* <FormField
+                title='Operator Name'
+                value={form.operatorName}
+                placeholder="Kindly fill in the Operator's name"
+                handleChangeText={(e) => setForm({ ...form, operatorName: e })}
+        otherStyles='mt-10'
+      /> */}
+
+      <FormField
+        title='Name'
+        value={user.username || ""}
+        placeholder='Enter your name'
+        handleChangeText={(text) => setUser({ ...user, name: text })}
+        otherStyles='mt-10'
       />
-      <TextInput
-        style={styles.input}
+      <FormField
+        title='Email'
         value={user.email || ""}
-        onChangeText={(text) => setUser({ ...user, email: text })}
-        placeholder='Email'
+        placeholder='Enter your email'
+        handleChangeText={(text) => setUser({ ...user, email: text })}
         keyboardType='email-address'
+        otherStyles='mt-10'
       />
-      <TextInput
-        style={styles.input}
-        value={user.phone}
-        onChangeText={(text) => setUser({ ...user, phone: text })}
-        placeholder='Phone'
+      <FormField
+        title='Phone'
+        value={user.phone || ""}
+        placeholder='Enter your phone number'
+        handleChangeText={(text) => setUser({ ...user, phone: text })}
         keyboardType='phone-pad'
+        otherStyles='mb-10 mt-10'
       />
-      <TouchableOpacity style={styles.button} onPress={handleUpdate}>
-        <Text style={styles.buttonText}>Update Profile</Text>
-      </TouchableOpacity>
+      <CustomButton
+        title='Update Profile'
+        handlePress={handleUpdate}
+        isLoading={false} // Add a state variable if you want to show loading state
+      />
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "#fff",
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-  input: {
-    height: 40,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 15,
-  },
-  button: {
-    backgroundColor: "#007bff",
-    padding: 10,
-    borderRadius: 5,
-    alignItems: "center",
-
-    marginTop: 15,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-});
 
 export default EditProfileScreen;
