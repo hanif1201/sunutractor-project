@@ -41,10 +41,7 @@ const add = () => {
 
   const openPicker = async (selectType) => {
     const result = await DocumentPicker.getDocumentAsync({
-      type:
-        selectType === "image"
-          ? ["image/png", "image/jpg"]
-          : ["video/mp4", "video/gif"],
+      type: "image/*",
     });
 
     if (!result.canceled) {
@@ -52,13 +49,6 @@ const add = () => {
         setForm({
           ...form,
           thumbnail: result.assets[0],
-        });
-      }
-
-      if (selectType === "video") {
-        setForm({
-          ...form,
-          video: result.assets[0],
         });
       }
     } else {
