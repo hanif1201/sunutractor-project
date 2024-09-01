@@ -65,7 +65,10 @@ const add = () => {
   const [sunuTractorOperator, setSunuTractorOperator] = useState(null);
   const [ownerOperator, setOwnerOperator] = useState(null);
   const submit = async () => {
+    if (isSubmitting) return;
     try {
+      setSubmitting(true);
+
       const tractorData = {
         make: form.make,
         model: form.model,
@@ -93,6 +96,19 @@ const add = () => {
       // Redirect to the tractors list page or display a success message
     } catch (error) {
       console.error(error);
+    } finally {
+      setSubmitting(false);
+      setForm({
+        make: "",
+        model: "",
+        thumbnail: null,
+        powerSource: "",
+        transmission: "",
+        location: null,
+        isAvailable: false,
+        price: "",
+        hasOperator: null,
+      });
     }
   };
 
@@ -108,17 +124,34 @@ const add = () => {
   const handleHasOperator = (value) => {
     setHasOperator(value);
     setForm({ ...form, hasOperator: value });
+    // Reset related states when changing operator status
+    setHasHireOperator(null);
+    setHasHireOperating(null);
   };
 
   const handleHasHireOperator = (value) => {
     setHasHireOperator(value);
     setForm({ ...form, hasHireOperator: value });
+    // Only show alert once when selecting 'yes'
+    if (value === "yes") {
+      Alert.alert(
+        "SUNUTractor will provide an operator. Thank you for registering your tractor."
+      );
+    }
   };
+
   const handleHasHireOperating = (value) => {
     setHasHireOperating(value);
     setForm({ ...form, hasHireOperating: value });
+    // Only show alert once when selecting an option
+    if (value === "yes") {
+      Alert.alert(
+        "Thank you for registering your tractor. You will be operating the tractor."
+      );
+    } else if (value === "no") {
+      Alert.alert("You will need an operator for your tractor!!");
+    }
   };
-
   const operatorOptions = [
     { label: "Yes", value: "yes" },
     { label: "No", value: "no" },
