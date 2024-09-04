@@ -1,19 +1,26 @@
 import { StatusBar } from "expo-status-bar";
-import { Redirect, Tabs, Stack } from "expo-router";
+import { Tabs } from "expo-router";
 import { Image, Text, View } from "react-native";
-
+import { useGlobalContext } from "../../context/GlobalProvider"; // Import the context
 import icons from "../../constants/icons";
-// import { Loader } from "../../components";
 
-const TabIcon = ({ icon, color, name, focused }) => {
+const TabIcon = ({ icon, color, name, focused, avatar }) => {
   return (
     <View className='flex items-center justify-center gap-2'>
-      <Image
-        source={icon}
-        resizeMode='contain'
-        tintColor={color}
-        className='w-6 h-6'
-      />
+      {avatar ? (
+        <Image
+          source={{ uri: avatar }} // Use the avatar URL
+          resizeMode='contain'
+          className='w-6 h-6 rounded-full' // Make it circular
+        />
+      ) : (
+        <Image
+          source={icon}
+          resizeMode='contain'
+          tintColor={color}
+          className='w-6 h-6'
+        />
+      )}
       <Text
         className={`${focused ? "font-psemibold" : "font-pregular"} text-xs`}
         style={{ color: color }}
@@ -25,6 +32,8 @@ const TabIcon = ({ icon, color, name, focused }) => {
 };
 
 const TabLayout = () => {
+  const { user } = useGlobalContext(); // Access user from context
+
   return (
     <>
       <Tabs
@@ -35,7 +44,6 @@ const TabLayout = () => {
           tabBarStyle: {
             backgroundColor: "#ffff",
             borderTopWidth: 1,
-
             height: 84,
           },
         }}
@@ -97,12 +105,13 @@ const TabLayout = () => {
               <TabIcon
                 icon={icons.message}
                 color={color}
-                name='Messsages'
+                name='Messages'
                 focused={focused}
               />
             ),
           }}
         />
+
         <Tabs.Screen
           name='profile'
           options={{
@@ -110,7 +119,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.add}
+                avatar={user?.avatar} // Pass the avatar URL
                 color={color}
                 name='Profile'
                 focused={focused}
@@ -119,8 +128,6 @@ const TabLayout = () => {
           }}
         />
       </Tabs>
-
-      {/* <Loader isLoading={loading} /> */}
 
       <StatusBar backgroundColor='#161622' style='light' />
     </>

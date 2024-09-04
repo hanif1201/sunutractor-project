@@ -85,7 +85,10 @@ const profile = () => {
     <SafeAreaView className=' mt-12  h-full '>
       <ScrollView className='px-4'>
         <View className='flex flex-row justify-center items-center mx-20'>
-          <Image source={images.john} className='w-full h-52 rounded-lg' />
+          <Image
+            source={{ uri: user?.avatar }} // Use the avatar URL from the user object
+            className='w-24 h-24 rounded-full' // Adjust size and make it circular
+          />
         </View>
         <View>
           <Text className=' text-2xl pb-4  mt-5 font-pbold flex justify-center items-center text-center'>
