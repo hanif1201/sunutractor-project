@@ -17,12 +17,14 @@ import {
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import icons from "../../constants/icons";
-import { getTractorById } from "../../lib/appwrite"; // Import the getTractorById function
+import { getTractorById, findOrCreateChatRoom } from "../../lib/appwrite";
+import { useGlobalContext } from "../../context/GlobalProvider"; // Import useGlobalContext
 
 const TractorDetailsScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { tractorId } = route.params;
+  const { user, isLogged } = useGlobalContext(); // Use the global context
 
   const [tractorDetails, setTractorDetails] = useState(null);
 
@@ -39,6 +41,46 @@ const TractorDetailsScreen = () => {
     fetchTractorDetails();
   }, [route.params.documentId]);
 
+  const handleContactOwner = async () => {
+    if (!isLogged) {
+      Alert.alert("Error", "You must be logged in to contact the owner.");
+      return;
+    }
+
+    console.log("Current user:", JSON.stringify(user, null, 2));
+    console.log("Tractor details:", JSON.stringify(tractorDetails, null, 2));
+
+    if (!user.$id || !tractorDetails.userId) {
+      console.error("Invalid user ID or owner ID");
+      console.log("user.$id:", user.$id);
+      console.log("tractorDetails.userId:", tractorDetails.userId);
+      Alert.alert(
+        "Error",
+        "Unable to start chat due to missing user information."
+      );
+      return;
+    }
+
+    try {
+      const chatRoomId = await findOrCreateChatRoom(
+        user.$id,
+        tractorDetails.userId
+      );
+      navigation.navigate("tractor/ChatScreen", {
+        chatRoomId,
+        currentUserId: user.$id,
+      });
+    } catch (error) {
+      console.error("Error opening chat:", error);
+      if (error.response) {
+        console.error(
+          "Error response:",
+          JSON.stringify(error.response, null, 2)
+        );
+      }
+      Alert.alert("Error", "Failed to open chat. Please try again.");
+    }
+  };
   if (!tractorDetails) {
     return <ActivityIndicator />;
   }
@@ -78,12 +120,11 @@ const TractorDetailsScreen = () => {
           {/* Add more details as needed */}
         </View>
         <TouchableOpacity
-          key={tractorDetails.id} // Use tractorDetails.id instead of tractor.id
-          onPress={() => navigation.navigate("home")}
+          onPress={handleContactOwner}
           activeOpacity={0.7}
-          className='bg-primary rounded-md min-h-[42px] flex flex-row justify-center items-center  py-2 mx-2 mb-1 '
+          className='bg-primary rounded-md min-h-[42px] flex flex-row justify-center items-center py-2 mx-2 mb-1'
         >
-          <Text className={`text-white font-psemibold `}>Contact Owner</Text>
+          <Text className='text-white font-psemibold'>Contact Owner</Text>
         </TouchableOpacity>
         <TouchableOpacity
           key={tractorDetails.id} // Use tractorDetails.id instead of tractor.id

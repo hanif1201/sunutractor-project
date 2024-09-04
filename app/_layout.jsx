@@ -64,6 +64,10 @@ export default function RootLayout() {
           name='tractor/EditProfileScreen'
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name='tractor/ChatScreen'
+          options={{ headerShown: false }}
+        />
       </Stack>
     </GlobalProvider>
   );
