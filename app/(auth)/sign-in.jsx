@@ -61,13 +61,13 @@ const SignIn = () => {
           <Image
             source={images.logo}
             resizeMode='contain'
-            className='w-[300px] h-[200px] -mt-20'
+            className='w-[300px] h-[200px]  ml-10 justify-center items-center  '
           />
-          <Text className='text-xl font-semibold text-black   text-center font-psemibold'>
-            Welcome back!
+          <Text className='text-xl font-psemibold text-center  '>
+            Welcome Back!
           </Text>
-          <Text className='text-base font-medium text-black  text-center font-pmedium'>
-            Log in to your exisitent account
+          <Text className='text-base font-medium text-black  text-center font-pregular'>
+            Sign in to your account
           </Text>
 
           <FormField

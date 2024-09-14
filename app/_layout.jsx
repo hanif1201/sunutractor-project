@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useFonts } from "expo-font";
 // import "react-native-url-polyfill/auto";
 import { SplashScreen, Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import GlobalProvider from "../context/GlobalProvider";
 import OwnerDetails from "./tractor/OwnerDetails";
 import TractorDetailsScreen from "./tractor/[tractorId]";
@@ -69,6 +70,7 @@ export default function RootLayout() {
           options={{ headerShown: false }}
         />
       </Stack>
+      <StatusBar backgroundColor='#218225' style='light' />
     </GlobalProvider>
   );
 }

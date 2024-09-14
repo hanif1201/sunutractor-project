@@ -19,6 +19,12 @@ import location from "../assets/icons/location.png";
 import question from "../assets/icons/question.png";
 import right from "../assets/icons/chevron-right.png";
 import circle from "../assets/icons/circle-check.png";
+import home05 from "../assets/icons/home-05.png";
+import lovely from "../assets/icons/lovely.png";
+import messages from "../assets/icons/messages.png";
+import location1 from "../assets/icons/location1.png";
+import notification from "../assets/icons/notification.png";
+import searchnormal from "../assets/icons/search-normal.png";
 
 export default {
   play,
@@ -42,4 +48,10 @@ export default {
   question,
   right,
   circle,
+  home05,
+  lovely,
+  messages,
+  location1,
+  notification,
+  searchnormal,
 };

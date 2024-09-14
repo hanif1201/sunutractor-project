@@ -10,6 +10,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
+import CustomInput from "../../components/CustomInput";
+
 // import heart from "../../assets/icons/heart-regular.png";
 import icons from "../../constants/icons";
 import images from "../../constants/images";
@@ -35,26 +37,49 @@ const home = () => {
   ];
 
   return (
-    <SafeAreaView className=' mt-12  h-full '>
-      <View className='px-4 mb-4 mt-4'>
-        <TextInput
-          className='h-10 border border-gray-300 rounded px-3 font-pregular'
-          placeholder='What would you like to rent??'
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
+    <SafeAreaView className=' mt-12  h-full bg-background'>
+      <View className='flex flex-row justify-between items-center px-4 mb-4 mt-4'>
+        <View className='flex flex-row items-center gap-2'>
+          <View className='p-2  border-lightDark rounded-lg border-2'>
+            <Image
+              source={icons.location1}
+              resizeMode='contain'
+              className='w-2 h-2 p-3  '
+            />
+          </View>
+          <View>
+            <Text className='text-base font-pregular text-grey'>
+              Your Location
+            </Text>
+
+            <Text className='text-base font-psemibold'>Uganda, Africa</Text>
+          </View>
+        </View>
+        <View>
+          <View className='p-2  border-lightDark rounded-full border-2'>
+            <Image
+              source={icons.notification}
+              resizeMode='contain'
+              className='w-2 h-2 p-3  '
+            />
+          </View>
+        </View>
       </View>
+      <View className='px-4 py-4'>
+        <CustomInput placeholder='Search Tractor...' />
+      </View>
+
       <ScrollView className='px-4'>
         <View className='flex flex-row justify-between'>
-          <Text className='text-lg font-pbold'>Categories</Text>
-          <Text className='text-blue-500 font-pregular'>See all</Text>
+          <Text className='text-lg font-pbold'> Tractor Categories</Text>
         </View>
-        <View className='flex flex-row flex-wrap justify-between mt-4'>
+        {/* Vertical ScrollView for Categories */}
+        <View>
           {categories.map((category, index) => (
-            <View key={index} className='w-1/3 p-2'>
+            <View key={index} className='mb-4'>
               <Image
                 source={{ uri: category.image }}
-                className='w-full h-24 rounded'
+                className='w-full h-32 rounded-lg'
               />
               <Text className='text-center mt-2 font-pregular'>
                 {category.name}
@@ -62,6 +87,7 @@ const home = () => {
             </View>
           ))}
         </View>
+
         {/* <View className='flex flex-row justify-between'>
           <Text className='text-lg font-bold'>Featured</Text>
           <Text className='text-blue-500'>See all</Text>

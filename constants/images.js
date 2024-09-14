@@ -3,5 +3,6 @@ import tractor from "../assets/images/tractor.png";
 import john from "../assets/images/john.png";
 import ads from "../assets/images/Ads.png";
 import empty from "../assets/images/EmptyState.png";
+import tractorscreen from "../assets/images/tractorscreen.png";
 
-export default { logo, tractor, john, ads, empty };
+export default { logo, tractor, john, ads, empty, tractorscreen };

@@ -49,7 +49,7 @@ const SignUp = () => {
         keyboardShouldPersistTaps='handled'
       >
         <View
-          className='w-full flex justify-center h-full px-4 my-6'
+          className='w-full flex justify-center h-full px-4 '
           style={{
             minHeight: Dimensions.get("window").height - 100,
           }}
@@ -57,13 +57,13 @@ const SignUp = () => {
           <Image
             source={images.logo}
             resizeMode='contain'
-            className='w-[300px] h-[200px] -mt-20'
+            className='w-[300px] h-[200px]  ml-10 justify-center items-center  '
           />
-          <Text className='text-xl font-semibold text-black   text-center font-psemibold'>
-            Lets Get Started!
+          <Text className='text-base font-psemibold text-center  '>
+            Get Started with sunu<Text className='text-danger'>TRACTOR</Text>
           </Text>
-          <Text className='text-base font-medium text-black  text-center font-pmedium'>
-            Create an account to get all features
+          <Text className='text-base font-base text-black  text-center font-pregular'>
+            Create a free account and explore efficient tractor to rent.
           </Text>
           <FormField
             title='Username'

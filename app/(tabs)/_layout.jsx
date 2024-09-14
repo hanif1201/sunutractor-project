@@ -44,7 +44,14 @@ const TabLayout = () => {
           tabBarStyle: {
             backgroundColor: "#ffff",
             borderTopWidth: 1,
-            height: 84,
+            height: 60,
+            borderTopLeftRadius: 40, // Curved edges
+            borderTopRightRadius: 40, // Curved edges
+            shadowColor: "#000", // Shadow color
+            shadowOffset: { width: 2, height: -2 }, // Shadow offset
+            shadowOpacity: 0.25, // Shadow opacity
+            shadowRadius: 4, // Shadow radius
+            elevation: 5, // For Android shadow
           },
         }}
       >
@@ -55,7 +62,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.house}
+                icon={icons.home05}
                 color={color}
                 name='Home'
                 focused={focused}
@@ -71,7 +78,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.heart}
+                icon={icons.lovely}
                 color={color}
                 name='Favourites'
                 focused={focused}
@@ -103,7 +110,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon={icons.message}
+                icon={icons.messages}
                 color={color}
                 name='Messages'
                 focused={focused}
@@ -119,7 +126,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                avatar={user?.avatar} // Pass the avatar URL
+                icon={icons.profile}
                 color={color}
                 name='Profile'
                 focused={focused}

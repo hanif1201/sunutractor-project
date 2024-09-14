@@ -5,9 +5,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#336431",
+        primary: "#218225",
         secondary: "#A0CA49",
         danger: "#FF4C4C",
+        lightDark: "#D2D8D5",
+        grey: "#8E8E8E",
+        background: "#fdfffd",
       },
       fontFamily: {
         pthin: ["Poppins-Thin", "sans-serif"],
