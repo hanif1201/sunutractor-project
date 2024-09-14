@@ -25,19 +25,29 @@ const home = () => {
   const { data: tractors, refetch } = useAppwrite(getAllTractors);
 
   const navigation = useNavigation();
+  const [activeCategory, setActiveCategory] = useState(null); // State for active category
 
   const handlePress = (id) => {
     navigation.navigate("TractorDetailsScreen", { id });
   };
   const [searchQuery, setSearchQuery] = useState("");
   const categories = [
-    { name: "All", image: "https://via.placeholder.com/150" },
-    { name: "Tractors", image: "https://via.placeholder.com/150" },
-    { name: "Home & Garden", image: "https://via.placeholder.com/150" },
+    "All",
+    "Agricultural tractors",
+    "Industrial tractors",
+    "Garden tractors",
+    "Rotary tillers",
+    "Compact tractors",
+    "Row crop tractors",
+    "Orchard tractors",
+    "Loader tractors",
   ];
+  const handleCategoryPress = (category) => {
+    setActiveCategory(category); // Set the active category
+  };
 
   return (
-    <SafeAreaView className=' mt-12  h-full bg-background'>
+    <SafeAreaView className=' mt-12  h-full '>
       <View className='flex flex-row justify-between items-center px-4 mb-4 mt-4'>
         <View className='flex flex-row items-center gap-2'>
           <View className='p-2  border-lightDark rounded-lg border-2'>
@@ -70,32 +80,29 @@ const home = () => {
       </View>
 
       <ScrollView className='px-4'>
-        <View className='flex flex-row justify-between'>
-          <Text className='text-lg font-pbold'> Tractor Categories</Text>
+        <View className='flex flex-row justify-between mt-2'>
+          <Text className='text-base font-pbold'> Tractor Categories</Text>
         </View>
-        {/* Vertical ScrollView for Categories */}
-        <View>
+        {/* Horizontal ScrollView for Categories */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          className='my-4'
+        >
           {categories.map((category, index) => (
-            <View key={index} className='mb-4'>
-              <Image
-                source={{ uri: category.image }}
-                className='w-full h-32 rounded-lg'
-              />
-              <Text className='text-center mt-2 font-pregular'>
-                {category.name}
-              </Text>
-            </View>
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleCategoryPress(category)}
+              className={`flex-row items-center mr-4 p-2 rounded-lg text-sm font-pregular ${
+                activeCategory === category
+                  ? " rounded-full border-primary border "
+                  : " "
+              }`} // Change background color based on active state
+            >
+              <Text className='text-base font-pregular'>{category}</Text>
+            </TouchableOpacity>
           ))}
-        </View>
-
-        {/* <View className='flex flex-row justify-between'>
-          <Text className='text-lg font-bold'>Featured</Text>
-          <Text className='text-blue-500'>See all</Text>
-        </View> */}
-        <View className='flex flex-row justify-between'>
-          <Text className='text-lg font-pbold'>Recommended For You</Text>
-          <Text className='text-blue-500 font-pregular'>See all</Text>
-        </View>
+        </ScrollView>
 
         <View className='flex flex-row flex-wrap justify-around mt-4 mb-40'>
           {tractors.map((tractor, index) => (
