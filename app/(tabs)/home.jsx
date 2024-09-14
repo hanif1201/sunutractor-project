@@ -8,6 +8,7 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
+  ImageBackground,
 } from "react-native";
 import React, { useState } from "react";
 import CustomInput from "../../components/CustomInput";
@@ -20,9 +21,11 @@ import { useNavigation } from "@react-navigation/native";
 import useAppwrite from "../../lib/useAppwrite";
 import { getAllTractors } from "../../lib/appwrite";
 import { createRouter } from "expo-router";
+import tractorImage from "../../assets/images/tractor.png"; // Adjust the path as necessary
 
 const home = () => {
   const { data: tractors, refetch } = useAppwrite(getAllTractors);
+  const image = {};
 
   const navigation = useNavigation();
   const [activeCategory, setActiveCategory] = useState(null); // State for active category
@@ -47,47 +50,57 @@ const home = () => {
   };
 
   return (
-    <SafeAreaView className=' mt-12  h-full '>
-      <View className='flex flex-row justify-between items-center px-4 mb-4 mt-4'>
-        <View className='flex flex-row items-center gap-2'>
-          <View className='p-2  border-lightDark rounded-lg border-2'>
-            <Image
-              source={icons.location1}
-              resizeMode='contain'
-              className='w-2 h-2 p-3  '
-            />
-          </View>
-          <View>
-            <Text className='text-base font-pregular text-grey'>
-              Your Location
-            </Text>
-
-            <Text className='text-base font-psemibold'>Uganda, Africa</Text>
+    <SafeAreaView className=' mt-6  h-full '>
+      <View className=' '>
+        <View
+          className='bg-primary pt-6 px-4 pb-6 rounded-b-3xl'
+          style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
+        >
+          <View className=' w-full  '>
+            <View className='flex flex-row justify-between items-center mb-4 mt-4'>
+              <View className='flex flex-row items-center gap-2'>
+                <View className='p-2 border-lightDark rounded-lg border-2'>
+                  <Image
+                    source={icons.location1}
+                    resizeMode='contain'
+                    className='w-2 h-2 p-3 text-white'
+                    style={{ tintColor: "white" }} // Change the tint color here
+                  />
+                </View>
+                <View>
+                  <Text className='text-base font-pregular text-white'>
+                    Your Location
+                  </Text>
+                  <Text className='text-base font-psemibold text-white'>
+                    Uganda, Africa
+                  </Text>
+                </View>
+              </View>
+              <View>
+                <View className='p-2 border-lightDark rounded-full border-2'>
+                  <Image
+                    source={icons.notification}
+                    resizeMode='contain'
+                    className='w-2 h-2 p-3'
+                    style={{ tintColor: "white" }}
+                  />
+                </View>
+              </View>
+            </View>
+            <View className='py-4'>
+              <CustomInput placeholder='Search Tractor...' />
+            </View>
           </View>
         </View>
-        <View>
-          <View className='p-2  border-lightDark rounded-full border-2'>
-            <Image
-              source={icons.notification}
-              resizeMode='contain'
-              className='w-2 h-2 p-3  '
-            />
-          </View>
-        </View>
-      </View>
-      <View className='px-4 py-4'>
-        <CustomInput placeholder='Search Tractor...' />
-      </View>
-
-      <ScrollView className='px-4'>
-        <View className='flex flex-row justify-between mt-2'>
+        <View className='flex flex-row justify-between mt-2 px-4'>
           <Text className='text-base font-pbold'> Tractor Categories</Text>
         </View>
+
         {/* Horizontal ScrollView for Categories */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          className='my-4'
+          className='my-4 px-4'
         >
           {categories.map((category, index) => (
             <TouchableOpacity
@@ -103,7 +116,9 @@ const home = () => {
             </TouchableOpacity>
           ))}
         </ScrollView>
+      </View>
 
+      <ScrollView className='px-4'>
         <View className='flex flex-row flex-wrap justify-around mt-4 mb-40'>
           {tractors.map((tractor, index) => (
             <View
