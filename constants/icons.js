@@ -25,6 +25,7 @@ import messages from "../assets/icons/messages.png";
 import location1 from "../assets/icons/location1.png";
 import notification from "../assets/icons/notification.png";
 import searchnormal from "../assets/icons/search-normal.png";
+import document from "../assets/icons/document-text.png";
 
 export default {
   play,
@@ -54,4 +55,5 @@ export default {
   location1,
   notification,
   searchnormal,
+  document,
 };

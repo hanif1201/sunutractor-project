@@ -1,140 +1,156 @@
-import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import { useNavigation } from "@react-navigation/native";
-import { useRoute } from "@react-navigation/native";
-
-import CustomButton from "../../components/CustomButton";
 import {
   View,
-  SafeAreaView,
   Text,
   Image,
-  Alert,
-  StyleSheet,
-  Pressable,
-  ActivityIndicator,
-  TouchableOpacity,
   ScrollView,
+  SafeAreaView,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import icons from "../../constants/icons";
-import { getTractorById, findOrCreateChatRoom } from "../../lib/appwrite";
-import { useGlobalContext } from "../../context/GlobalProvider"; // Import useGlobalContext
+import { getTractorById } from "../../lib/appwrite";
+import { useRoute } from "@react-navigation/native";
 
 const TractorDetailsScreen = () => {
-  const navigation = useNavigation();
   const route = useRoute();
-  const { tractorId } = route.params;
-  const { user, isLogged } = useGlobalContext(); // Use the global context
-
   const [tractorDetails, setTractorDetails] = useState(null);
 
   useEffect(() => {
     const fetchTractorDetails = async () => {
       try {
-        const tractor = await getTractorById(route.params.documentId); // Use the document ID
+        const tractor = await getTractorById(route.params.documentId);
         setTractorDetails(tractor);
       } catch (error) {
         console.error(error);
-        Alert.alert("Error", error.message);
       }
     };
     fetchTractorDetails();
   }, [route.params.documentId]);
 
-  const handleContactOwner = async () => {
-    if (!isLogged) {
-      Alert.alert("Error", "You must be logged in to contact the owner.");
-      return;
-    }
-
-    console.log("Current user:", JSON.stringify(user, null, 2));
-    console.log("Tractor details:", JSON.stringify(tractorDetails, null, 2));
-
-    if (!user.$id || !tractorDetails.userId) {
-      console.error("Invalid user ID or owner ID");
-      console.log("user.$id:", user.$id);
-      console.log("tractorDetails.userId:", tractorDetails.userId);
-      Alert.alert(
-        "Error",
-        "Unable to start chat due to missing user information."
-      );
-      return;
-    }
-
-    try {
-      const chatRoomId = await findOrCreateChatRoom(
-        user.$id,
-        tractorDetails.userId
-      );
-      navigation.navigate("tractor/ChatScreen", {
-        chatRoomId,
-        currentUserId: user.$id,
-      });
-    } catch (error) {
-      console.error("Error opening chat:", error);
-      if (error.response) {
-        console.error(
-          "Error response:",
-          JSON.stringify(error.response, null, 2)
-        );
-      }
-      Alert.alert("Error", "Failed to open chat. Please try again.");
-    }
-  };
   if (!tractorDetails) {
     return <ActivityIndicator />;
   }
 
   return (
-    <SafeAreaView className=' mt-12  h-full '>
-      <View className='ml-5'>
-        <Image
-          source={icons.leftArrow}
-          resizeMode='contain'
-          style={{ width: 30, height: 30, tintColor: "#000" }}
-        />
+    <SafeAreaView style={{ flex: 1 }}>
+      {/* Fixed Header */}
+      <View
+        style={{
+          position: "absolute",
+          top: 25,
+          left: 0,
+          right: 0,
+          zIndex: 1,
+          backgroundColor: "white",
+          padding: 10,
+        }}
+      >
+        <View className='flex flex-row items-center'>
+          <View className='p-2 border-lightDark rounded-lg border-2'>
+            <Image
+              source={icons.location1}
+              resizeMode='contain'
+              style={{ width: 30, height: 30, tintColor: "#292D32" }}
+            />
+          </View>
+          <Text className='font-pmedium text-lg ml-4'>Tractor Details</Text>
+        </View>
       </View>
-      <ScrollView className='mb-16'>
+
+      {/* Scrollable Content */}
+      <ScrollView
+        contentContainerStyle={{ paddingTop: 100, paddingBottom: 100 }}
+      >
+        {/* Add padding to avoid overlap with the fixed header */}
         <View className='flex flex-row justify-center items-center mx-5 mt-5'>
           <Image
             source={{ uri: tractorDetails.thumbnail }}
             className='w-full h-72 rounded-lg'
           />
         </View>
-        <View className='m-5 space-y-2'>
-          <Text className='font-psemibold text-2xl '>Tractor Details</Text>
-          <Text className='font-psemibold text-2xl '>
-            Model: {tractorDetails.make} {tractorDetails.model}
-          </Text>
-          <Text className='text-primary font-psemibold text-2xl'>
-            Price: {tractorDetails.price}
-          </Text>
-          <Text className='font-psemibold text-xl '>
-            Location: {tractorDetails.region} {tractorDetails.district}{" "}
-            {tractorDetails.village}
-          </Text>
-          <Text className=' text-xl pb-4 font-pregular'>
-            Description: {tractorDetails.description}
-          </Text>
+        <View className='m-5'>
+          <View className='flex flex-row justify-around items-center mx-4'>
+            <Text className='mt-1 font-pmedium text-base w-4/5'>
+              {tractorDetails.make} {tractorDetails.model}
+            </Text>
+            <Text className='mt-1 font-psemibold text-2xl text-primary'>
+              {tractorDetails.price} UGS
+              <Text className='text-grey font-pregular'>/day</Text>
+            </Text>
+          </View>
 
-          {/* Add more details as needed */}
+          <Text className='text-xl py-4 font-psemibold'>SPECIFICATION</Text>
+          <View className='border-lightDark border rounded px-4 py-4'>
+            <Text className='font-pregular text-base'>
+              • Length: 141.7 in (359.5 cm)
+            </Text>
+            <Text className='font-pregular text-base'>
+              • Width: 72.8 in (185.0 cm)
+            </Text>
+            <Text className='font-pregular text-base'>
+              • Height: 102.4 in (260.0 cm)
+            </Text>
+            <Text className='font-pregular text-base'>
+              • Wheelbase: 84.6 in (214.8 cm)
+            </Text>
+            <Text className='font-pregular text-base'>
+              • Weight: 6,260 lbs (2,835 kg)
+            </Text>
+            <Text className='font-pregular text-base'>
+              • Payload Capacity: 2,500 lbs (1,134 kg)
+            </Text>
+            <Text className='font-pregular text-base'>
+              • Fuel Tank Capacity: 21.1 gal (79.8 L)
+            </Text>
+            <Text className='font-pregular text-base'>
+              • Tire Size: 12.4-24 R1
+            </Text>
+          </View>
         </View>
-        <TouchableOpacity
-          onPress={handleContactOwner}
-          activeOpacity={0.7}
-          className='bg-primary rounded-md min-h-[42px] flex flex-row justify-center items-center py-2 mx-2 mb-1'
-        >
-          <Text className='text-white font-psemibold'>Contact Owner</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          key={tractorDetails.id} // Use tractorDetails.id instead of tractor.id
-          onPress={() => navigation.navigate("home")}
-          activeOpacity={0.7}
-          className='bg-primary rounded-md min-h-[42px] flex flex-row justify-center items-center mt-4 py-2 mx-1 mb-1 '
-        >
-          <Text className={`text-white font-psemibold `}>Rent Now</Text>
-        </TouchableOpacity>
+
+        <Text className='text-xl py-4 font-psemibold'>SPECIFICATION</Text>
+        <View className='border-lightDark border rounded px-4 py-4'>
+          <Text className='font-pregular text-base'>
+            • Length: 141.7 in (359.5 cm)
+          </Text>
+          <Text className='font-pregular text-base'>
+            • Width: 72.8 in (185.0 cm)
+          </Text>
+          <Text className='font-pregular text-base'>
+            • Height: 102.4 in (260.0 cm)
+          </Text>
+          <Text className='font-pregular text-base'>
+            • Wheelbase: 84.6 in (214.8 cm)
+          </Text>
+          <Text className='font-pregular text-base'>
+            • Weight: 6,260 lbs (2,835 kg)
+          </Text>
+          <Text className='font-pregular text-base'>
+            • Payload Capacity: 2,500 lbs (1,134 kg)
+          </Text>
+          <Text className='font-pregular text-base'>
+            • Fuel Tank Capacity: 21.1 gal (79.8 L)
+          </Text>
+          <Text className='font-pregular text-base'>
+            • Tire Size: 12.4-24 R1
+          </Text>
+        </View>
       </ScrollView>
+      {/* Fixed View at the Bottom */}
+      <View
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          padding: 16,
+          backgroundColor: "white",
+          borderTopWidth: 1,
+          borderTopColor: "gray",
+        }}
+      >
+        <Text style={{ textAlign: "center" }}>Fixed Bottom View</Text>
+      </View>
     </SafeAreaView>
   );
 };

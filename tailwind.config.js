@@ -11,6 +11,7 @@ module.exports = {
         lightDark: "#D2D8D5",
         grey: "#8E8E8E",
         background: "#fdfffd",
+        black: "#292D32",
       },
       fontFamily: {
         pthin: ["Poppins-Thin", "sans-serif"],

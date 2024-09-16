@@ -22,6 +22,7 @@ import useAppwrite from "../../lib/useAppwrite";
 import { getAllTractors } from "../../lib/appwrite";
 import { createRouter } from "expo-router";
 import tractorImage from "../../assets/images/tractor.png"; // Adjust the path as necessary
+import CustomButton from "../../components/CustomButton";
 
 const home = () => {
   const { data: tractors, refetch } = useAppwrite(getAllTractors);
@@ -51,10 +52,10 @@ const home = () => {
 
   return (
     <SafeAreaView className=' mt-6  h-full '>
-      <View className=' '>
+      <View className='border-b border-grey'>
         <View
           className='bg-primary pt-6 px-4 pb-6 rounded-b-3xl'
-          style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
+          // style={{ borderBottomWidth: 1, borderBottomColor: "black" }}
         >
           <View className=' w-full  '>
             <View className='flex flex-row justify-between items-center mb-4 mt-4'>
@@ -92,8 +93,8 @@ const home = () => {
             </View>
           </View>
         </View>
-        <View className='flex flex-row justify-between mt-2 px-4'>
-          <Text className='text-base font-pbold'> Tractor Categories</Text>
+        <View className='flex flex-row justify-between mt-6 px-4'>
+          <Text className='text-base font-psemibold'> Tractor Categories</Text>
         </View>
 
         {/* Horizontal ScrollView for Categories */}
@@ -123,40 +124,64 @@ const home = () => {
           {tractors.map((tractor, index) => (
             <View
               key={index}
-              className='w-full  min-h-[300px] m-1 border-black border-2'
+              className='w-full  min-h-[300px] m-1 border-grey border rounded-2xl'
             >
-              <Image
-                source={{ uri: tractor.thumbnail }}
-                className='w-full h-52 rounded'
-              />
+              <View className='p-1'>
+                <Image
+                  source={{ uri: tractor.thumbnail }}
+                  className='w-full h-52 rounded-2xl '
+                />
+              </View>
+
               <View className='flex flex-row justify-between items-center pr-2'>
-                <Text className='text-start mt-1 font-psemibold text-lg w-4/5'>
+                <Text className='text-start mt-1 pl-1 font-pmedium text-base w-4/5'>
                   {tractor.make} {tractor.model}
                 </Text>
-                <Image
-                  source={icons.heart}
-                  resizeMode='contain'
-                  style={{ width: 24, height: 24, tintColor: "#000" }}
-                />
-              </View>
-              <View>
-                <Text className='text-start mt-1 font-pbold text-sm'>
-                  {tractor.price}/hr
+                <Text className='text-start mt-1 font-psemibold text-sm text-primary'>
+                  {tractor.price} UGS
+                  <Text className='text-grey font-pregular'>/day</Text>
                 </Text>
               </View>
-              <View className='flex flex-row items-center'>
-                <Image
-                  source={icons.location}
-                  resizeMode='contain'
-                  style={{ width: 16, height: 16, tintColor: "#000" }}
-                />
-                <Text className='text-start mt-1 font-pbold text-sm'>
-                  {tractor.region}
-                  {tractor.district}
-                  {tractor.village}
-                </Text>
+              <View className='flex flex-row justify-between items-center pr-2 mt-4 pb-4'>
+                <View className='flex flex-row '>
+                  <Image
+                    source={icons.location1}
+                    resizeMode='contain'
+                    className='w-1 h-1 p-3 text-white'
+                    style={{ tintColor: "grey" }} // Change the tint color here
+                  />
+                  <Text className='text-start mt-1 pl-1 font-pmedium text-base '>
+                    {tractor.district}
+                  </Text>
+                </View>
+
+                <View className='flex flex-row '>
+                  <Image
+                    source={icons.document}
+                    resizeMode='contain'
+                    className='w-1 h-1 p-3 text-white'
+                    style={{ tintColor: "grey" }} // Change the tint color here
+                  />
+                  <Text className='text-start mt-1 pl-1 font-pmedium text-base '>
+                    manual
+                  </Text>
+                </View>
+
+                <View className='flex flex-row '>
+                  <CustomButton
+                    title='BOOK NOW'
+                    handlePress={() =>
+                      navigation.navigate("tractor/[tractorId]", {
+                        documentId: tractor.$id, // Pass the document ID
+                      })
+                    }
+                    containerStyles=' px-4'
+                    // isLoading={isSubmitting}
+                  />
+                </View>
               </View>
-              <TouchableOpacity
+
+              {/* <TouchableOpacity
                 key={tractor.id}
                 onPress={() =>
                   navigation.navigate("tractor/[tractorId]", {
@@ -169,8 +194,8 @@ const home = () => {
                 <Text className={`text-white font-psemibold `}>
                   Check Detail
                 </Text>
-                {/* <ActivityIndicator color='#fff' size='small' className='ml-2' /> */}
-              </TouchableOpacity>
+                <ActivityIndicator color='#fff' size='small' className='ml-2' />
+              </TouchableOpacity> */}
             </View>
           ))}
         </View>
