@@ -26,6 +26,7 @@ import location1 from "../assets/icons/location1.png";
 import notification from "../assets/icons/notification.png";
 import searchnormal from "../assets/icons/search-normal.png";
 import document from "../assets/icons/document-text.png";
+import arrowleft from "../assets/icons/arrow-left.png";
 
 export default {
   play,
@@ -56,4 +57,5 @@ export default {
   notification,
   searchnormal,
   document,
+  arrowleft,
 };

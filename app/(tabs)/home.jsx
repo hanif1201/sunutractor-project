@@ -109,7 +109,7 @@ const home = () => {
               onPress={() => handleCategoryPress(category)}
               className={`flex-row items-center mr-4 p-2 rounded-lg text-sm font-pregular ${
                 activeCategory === category
-                  ? " rounded-full border-primary border "
+                  ? " rounded-full border-primary border bg-primary text-white "
                   : " "
               }`} // Change background color based on active state
             >

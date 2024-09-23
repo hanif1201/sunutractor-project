@@ -48,7 +48,7 @@ const TractorDetailsScreen = () => {
         <View className='flex flex-row items-center'>
           <View className='p-2 border-lightDark rounded-lg border-2'>
             <Image
-              source={icons.location1}
+              source={icons.arrowleft}
               resizeMode='contain'
               style={{ width: 30, height: 30, tintColor: "#292D32" }}
             />
