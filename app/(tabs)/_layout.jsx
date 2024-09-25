@@ -45,13 +45,13 @@ const TabLayout = () => {
             backgroundColor: "#ffff",
             borderTopWidth: 1,
             height: 60,
-            borderTopLeftRadius: 40, // Curved edges
-            borderTopRightRadius: 40, // Curved edges
-            shadowColor: "#000", // Shadow color
-            shadowOffset: { width: 2, height: -2 }, // Shadow offset
-            shadowOpacity: 0.25, // Shadow opacity
-            shadowRadius: 4, // Shadow radius
-            elevation: 5, // For Android shadow
+            borderTopLeftRadius: 40,
+            borderTopRightRadius: 40,
+            shadowColor: "#000",
+            shadowOffset: { width: 2, height: -2 },
+            shadowOpacity: 0.25,
+            shadowRadius: 4,
+            elevation: 5,
           },
         }}
       >
