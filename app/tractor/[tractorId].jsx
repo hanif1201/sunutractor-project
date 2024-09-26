@@ -43,7 +43,10 @@ const TractorDetailsScreen = () => {
       try {
         const tractor = await getTractorById(route.params.documentId);
         setTractorDetails(tractor);
+
+        // Fetch user details based on the userId from tractor details
         const user = await getUserById(tractor.userId); // Use the new function
+        console.log("Fetched User Details:", user); // Log the fetched user details
         setUserDetails(user);
       } catch (error) {
         console.error(error);
@@ -95,7 +98,11 @@ const TractorDetailsScreen = () => {
         currentUser.$id,
         tractorDetails.userId
       ); // Use the current user's ID
-      navigation.navigate("tractor/ChatScreen", { chatRoomId }); // Navigate to the chat room
+      navigation.navigate("tractor/ChatScreen", {
+        chatRoomId,
+        ownerName: userDetails.username,
+        ownerAvatar: userDetails.avatar || null,
+      }); // Navigate to the chat room
     } catch (error) {
       console.error("Error creating or finding chat room:", error);
       Alert.alert("Error", "Could not create or find chat room.");

@@ -6,17 +6,22 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Image,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import images from "../../constants/images";
+import icons from "../../constants/icons";
 import { getMessages, sendMessage } from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider"; // Import useGlobalContext
 import { useNavigation, useRoute } from "@react-navigation/native"; // Import useRoute
 
 const ChatScreen = () => {
   const route = useRoute(); // Get the route object
-  const { chatRoomId, currentUserId } = route.params; // Access params from route
+  const { chatRoomId, currentUserId, ownerName, ownerAvatar } = route.params; // Access params from route
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const { user } = useGlobalContext();
+  console.log("Owner Avatar URL:", ownerAvatar);
 
   console.log("Current User:", user); // Log the user object
 
@@ -50,30 +55,71 @@ const ChatScreen = () => {
         item.senderId === user.$id ? styles.sentMessage : styles.receivedMessage
       }
     >
-      <Text>{item.content}</Text>
+      <Text
+        style={{
+          fontSize: 16,
+          color: item.senderId === user.$id ? "white" : "black",
+        }}
+      >
+        {item.content}
+      </Text>
     </View>
   );
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={messages}
-        renderItem={renderMessage}
-        keyExtractor={(item) => item.$id}
-        inverted
-      />
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          value={inputMessage}
-          onChangeText={setInputMessage}
-          placeholder='Type a message...'
-        />
-        <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
-          <Text>Send</Text>
-        </TouchableOpacity>
+    <>
+      <View className='flex flex-row items-center my-10 mx-5'>
+        <View className='p-2 border-lightDark rounded-lg border-2'>
+          <Image
+            source={icons.arrowleft}
+            resizeMode='contain'
+            style={{ width: 20, height: 20, tintColor: "#292D32" }}
+          />
+        </View>
+
+        <View className='flex flex-row items-center space-x-2 rounded-lg justify-center ml-2'>
+          <Image
+            source={{ uri: ownerAvatar }}
+            resizeMode='contain'
+            style={{ width: 54, height: 54, tintColor: "#292D32" }}
+            className='w-48 h-48 rounded-full'
+          />
+          <View>
+            <Text className='font-psemibold text-base'>{ownerName}</Text>
+            <View className='flex flex-row items-center'>
+              <Image
+                source={icons.verify}
+                resizeMode='contain'
+                style={{ width: 20, height: 20, tintColor: "#218225" }}
+              />
+              <Text className='font-pregular text-base text-primary'>
+                Online
+              </Text>
+            </View>
+          </View>
+        </View>
       </View>
-    </View>
+
+      <View style={styles.container}>
+        <FlatList
+          data={messages}
+          renderItem={renderMessage}
+          keyExtractor={(item) => item.$id}
+          inverted
+        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={inputMessage}
+            onChangeText={setInputMessage}
+            placeholder='Type a message...'
+          />
+          <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
+            <Text className='font-psemibold text-lg '>Send</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </>
   );
 };
 
@@ -83,14 +129,15 @@ const styles = StyleSheet.create({
   },
   sentMessage: {
     alignSelf: "flex-end",
-    backgroundColor: "#DCF8C6",
+    backgroundColor: "#218225",
     padding: 10,
     margin: 5,
     borderRadius: 10,
+    color: "white",
   },
   receivedMessage: {
     alignSelf: "flex-start",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "#F2F2F2",
     padding: 10,
     margin: 5,
     borderRadius: 10,
@@ -105,6 +152,8 @@ const styles = StyleSheet.create({
     borderColor: "#CCCCCC",
     borderRadius: 20,
     paddingHorizontal: 10,
+    width: "80%",
+    height: 50,
   },
   sendButton: {
     marginLeft: 10,

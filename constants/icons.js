@@ -27,6 +27,8 @@ import notification from "../assets/icons/notification.png";
 import searchnormal from "../assets/icons/search-normal.png";
 import document from "../assets/icons/document-text.png";
 import arrowleft from "../assets/icons/arrow-left.png";
+import verify from "../assets/icons/verify.png";
+import send from "../assets/icons/send.png";
 
 export default {
   play,
@@ -58,4 +60,6 @@ export default {
   searchnormal,
   document,
   arrowleft,
+  verify,
+  send,
 };
