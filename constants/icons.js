@@ -29,6 +29,8 @@ import document from "../assets/icons/document-text.png";
 import arrowleft from "../assets/icons/arrow-left.png";
 import verify from "../assets/icons/verify.png";
 import send from "../assets/icons/send.png";
+import addcircle from "../assets/icons/add-circle.png";
+import group from "../assets/icons/Group.png";
 
 export default {
   play,
@@ -62,4 +64,6 @@ export default {
   arrowleft,
   verify,
   send,
+  addcircle,
+  group,
 };

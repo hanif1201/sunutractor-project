@@ -47,36 +47,13 @@ const TractorDetailsScreen = () => {
         // Fetch user details based on the userId from tractor details
         const user = await getUserById(tractor.userId); // Use the new function
         console.log("Fetched User Details:", user); // Log the fetched user details
-        setUserDetails(user);
+        setUserDetails(user); // Ensure this is set correctly
       } catch (error) {
         console.error(error);
       }
     };
     fetchTractorDetails();
   }, [route.params.documentId]);
-
-  // const fetchTractorDetails = async () => {
-  //   try {
-  //     const tractor = await getTractorById(route.params.documentId);
-  //     setTractorDetails(tractor);
-
-  //     // Fetch user details based on the userId from tractor details
-  //     const user = await getUserById(tractor.userId); // Use the new function
-  //     setUserDetails(user);
-
-  //     // Fetch current user
-  //     const currentUser = await getCurrentUser();
-  //     console.log("Current User:", currentUser); // Log the current user
-
-  //     if (!currentUser) {
-  //       throw new Error("User not authenticated");
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //     Alert.alert("Error", error.message);
-  //   }
-  // };
-
   if (!tractorDetails) {
     return <ActivityIndicator />;
   }
@@ -98,6 +75,11 @@ const TractorDetailsScreen = () => {
         currentUser.$id,
         tractorDetails.userId
       ); // Use the current user's ID
+
+      // Log userDetails to ensure it contains the avatar
+      console.log("User Details in handleContactOwner:", userDetails);
+
+      // Pass the owner's name and avatar URL
       navigation.navigate("tractor/ChatScreen", {
         chatRoomId,
         ownerName: userDetails.username,

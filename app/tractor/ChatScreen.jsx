@@ -11,18 +11,23 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "../../constants/images";
 import icons from "../../constants/icons";
-import { getMessages, sendMessage } from "../../lib/appwrite";
+import {
+  getMessages,
+  sendMessage,
+  getUserById,
+  getChatRooms,
+} from "../../lib/appwrite";
 import { useGlobalContext } from "../../context/GlobalProvider"; // Import useGlobalContext
 import { useNavigation, useRoute } from "@react-navigation/native"; // Import useRoute
 
 const ChatScreen = () => {
   const route = useRoute(); // Get the route object
   const { chatRoomId, currentUserId, ownerName, ownerAvatar } = route.params; // Access params from route
+
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
   const { user } = useGlobalContext();
   console.log("Owner Avatar URL:", ownerAvatar);
-
   console.log("Current User:", user); // Log the user object
 
   useEffect(() => {
@@ -68,7 +73,7 @@ const ChatScreen = () => {
 
   return (
     <>
-      <View className='flex flex-row items-center my-10 mx-5'>
+      <View className='flex flex-row items-center my-10 mx-5 '>
         <View className='p-2 border-lightDark rounded-lg border-2'>
           <Image
             source={icons.arrowleft}
@@ -115,7 +120,11 @@ const ChatScreen = () => {
             placeholder='Type a message...'
           />
           <TouchableOpacity onPress={handleSend} style={styles.sendButton}>
-            <Text className='font-psemibold text-lg '>Send</Text>
+            <Image
+              source={icons.group}
+              resizeMode='contain'
+              style={{ width: 40, height: 40 }}
+            />
           </TouchableOpacity>
         </View>
       </View>
@@ -137,7 +146,7 @@ const styles = StyleSheet.create({
   },
   receivedMessage: {
     alignSelf: "flex-start",
-    backgroundColor: "#F2F2F2",
+    backgroundColor: "#d2d8d5",
     padding: 10,
     margin: 5,
     borderRadius: 10,
