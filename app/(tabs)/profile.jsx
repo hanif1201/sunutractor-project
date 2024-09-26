@@ -25,12 +25,14 @@ const profile = () => {
   const { user, setUser, setIsLogged } = useGlobalContext();
   const [tractorCount, setTractorCount] = useState(0);
   const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const userData = await getCurrentUser();
         setUserName(userData.username || "User");
+        setEmail(userData.email || "Email");
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -84,7 +86,28 @@ const profile = () => {
   return (
     <SafeAreaView className=' mt-12  h-full '>
       <ScrollView className='px-4'>
-        <View className='flex flex-row justify-center items-center mx-20'>
+        <Text className='font-pmedium text-lg text-center'>My Account</Text>
+        <View className='border border-primary w-full flex flex-row'>
+          <View className=' '>
+            <Image
+              source={{ uri: user?.avatar }} // Use the avatar URL from the user object
+              className='w-16 h-16 rounded-full' // Adjust size and make it circular
+            />
+          </View>
+          <View>
+            <Text>{userName}</Text>
+            <Text>{email}</Text>
+            <Text>+1 234 567 8900</Text>
+          </View>
+          <View className='p-2 '>
+            <Image
+              source={icons.arrowleft}
+              resizeMode='contain'
+              style={{ width: 20, height: 20, tintColor: "#292D32" }}
+            />
+          </View>
+        </View>
+        <View className='flex flex-row r mx-20'>
           <Image
             source={{ uri: user?.avatar }} // Use the avatar URL from the user object
             className='w-24 h-24 rounded-full' // Adjust size and make it circular
