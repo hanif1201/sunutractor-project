@@ -31,6 +31,12 @@ import verify from "../assets/icons/verify.png";
 import send from "../assets/icons/send.png";
 import addcircle from "../assets/icons/add-circle.png";
 import group from "../assets/icons/Group.png";
+import messageQuestion from "../assets/icons/message-question.png";
+import shield from "../assets/icons/shield-tick.png";
+import infoCircle from "../assets/icons/info-circle.png";
+import starr from "../assets/icons/star.png";
+import share from "../assets/icons/share.png";
+import edit from "../assets/icons/edit.png";
 
 export default {
   play,
@@ -66,4 +72,10 @@ export default {
   send,
   addcircle,
   group,
+  messageQuestion,
+  shield,
+  infoCircle,
+  starr,
+  share,
+  edit,
 };

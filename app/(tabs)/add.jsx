@@ -163,11 +163,19 @@ const add = () => {
 
   return (
     <SafeAreaView className='bg-white h-full'>
-      <ScrollView className='px-4 my-6'>
-        <Text className='text-2xl text-primary font-psemibold mt-4 text-center'>
-          List a Tractor for Rent
+      <View className=' mb-5 mt-5 ml-4 flex flex-row items-center'>
+        <View className='p-2 border-lightDark rounded-lg border-2'>
+          <Image
+            source={icons.arrowleft}
+            resizeMode='contain'
+            style={{ width: 20, height: 20, tintColor: "#292D32" }}
+          />
+        </View>
+        <Text className='font-pmedium text-lg ml-4'>
+          List a Tractor for rent
         </Text>
-
+      </View>
+      <ScrollView className='px-4 my-6'>
         <View>
           <View className='mt-7 space-y-2'>
             <Text className='text-base text-black font-pmedium'>
@@ -182,7 +190,7 @@ const add = () => {
                   className='w-full h-64 rounded-2xl'
                 />
               ) : (
-                <View className='w-full h-16 px-4 bg-black-100 rounded-2xl border-2 border-black-200 flex justify-center items-center flex-row space-x-2'>
+                <View className='w-full h-24 px-4 bg-[#E2F1ED] rounded-2xl border  flex justify-center items-center flex-row space-x-2'>
                   <Image
                     source={icons.upload}
                     resizeMode='contain'
@@ -201,28 +209,28 @@ const add = () => {
             value={form.make}
             placeholder='What is the maker of your tractor?'
             handleChangeText={(e) => setForm({ ...form, make: e })}
-            otherStyles='mt-10'
+            otherStyles='mt-4'
           />
           <FormField
             title='Tractor Model :'
             value={form.model}
             placeholder='What is the model of your tractor?'
             handleChangeText={(e) => setForm({ ...form, model: e })}
-            otherStyles='mt-10'
+            otherStyles='mt-4'
           />
           <FormField
             title='Tractor Power Source :'
             value={form.powerSource}
             placeholder='What is the Power Source of your tractor?'
             handleChangeText={(e) => setForm({ ...form, powerSource: e })}
-            otherStyles='mt-10'
+            otherStyles='mt-4'
           />
           <FormField
             title='Tractor Transmission :'
             value={form.transmission}
             placeholder='What is the Power Transmission of your tractor?'
             handleChangeText={(e) => setForm({ ...form, transmission: e })}
-            otherStyles='mt-10'
+            otherStyles='mt-4'
           />
 
           <FormField
@@ -234,16 +242,16 @@ const add = () => {
                 setForm({ ...form, price: e });
               }
             }}
-            otherStyles='mt-10  '
+            otherStyles='mt-4  '
           />
           <LocationDropdown
             onLocationChange={handleLocationChange}
             location={location}
           />
-          <View className='flex flex-row'>
+          <View className='flex flex-row my-2'>
             <Text
-              style={{ fontSize: 20, color: "black" }}
-              className='font-psemibold'
+              style={{ fontSize: 16, color: "black" }}
+              className='font-pregular'
             >
               Is the tractor available?
             </Text>
@@ -257,7 +265,7 @@ const add = () => {
           </View>
 
           <View>
-            <Text className='font-pmedium text-lg'>
+            <Text className='font-pregular text-base mb-2'>
               Do you have an operator for your tractor?
             </Text>
             <Dropdown
@@ -281,27 +289,27 @@ const add = () => {
                 value={form.operatorName}
                 placeholder="Kindly fill in the Operator's name"
                 handleChangeText={(e) => setForm({ ...form, operatorName: e })}
-                otherStyles='mt-10'
+                otherStyles='mt-4'
               />
               <FormField
                 title='Operator Phone :'
                 value={form.operatorPhone}
                 placeholder="Kindly fill in the Operator's phone number"
                 handleChangeText={(e) => setForm({ ...form, operatorPhone: e })}
-                otherStyles='mt-10'
+                otherStyles='mt-4'
               />
               <FormField
                 title='Operator Email :'
                 value={form.operatorEmail}
                 placeholder="Kindly fill in the Operator's email"
                 handleChangeText={(e) => setForm({ ...form, operatorEmail: e })}
-                otherStyles='mt-10'
+                otherStyles='mt-4'
               />
             </View>
           )}
           {hasOperator === "no" && (
             <View>
-              <Text className='font-pmedium text-lg'>
+              <Text className='font-pregular text-lg'>
                 Will you like to hire an operator from Sunu Tractor?
               </Text>
               <Dropdown
@@ -324,7 +332,7 @@ const add = () => {
             )}
           {hasHireOperator === "no" && (
             <View>
-              <Text className='font-pmedium text-lg'>
+              <Text className='font-pregular text-lg'>
                 Will you be operating the tractor?
               </Text>
               <Dropdown
@@ -368,7 +376,7 @@ const styles = StyleSheet.create({
   dropdown: {
     height: 50,
     borderColor: "black",
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
     marginBottom: 16,

@@ -13,6 +13,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import * as DocumentPicker from "expo-document-picker";
+import icons from "../../constants/icons";
 
 const EditTractorScreen = () => {
   const [tractor, setTractor] = useState(null);
@@ -113,10 +114,17 @@ const EditTractorScreen = () => {
   if (!tractor) return <Text>No tractor found</Text>;
 
   return (
-    <ScrollView className='px-4 mt-20 '>
-      <Text className='text-2xl text-primary font-psemibold mt-4 text-center mb-4'>
-        Edit Tractor Details
-      </Text>
+    <ScrollView className='px-4 mt-12 '>
+      <View className='ml-5 mb-5 flex flex-row items-center'>
+        <View className='p-2 border-lightDark rounded-lg border-2'>
+          <Image
+            source={icons.arrowleft}
+            resizeMode='contain'
+            style={{ width: 20, height: 20, tintColor: "#292D32" }}
+          />
+        </View>
+        <Text className='font-pmedium text-lg ml-4'>Edit tractor details</Text>
+      </View>
 
       <TouchableOpacity onPress={handleImagePick} className='mb-4'>
         {newImage?.uri || tractor.thumbnail ? (
@@ -137,14 +145,14 @@ const EditTractorScreen = () => {
         value={tractor.make}
         placeholder='Enter make'
         handleChangeText={(text) => setTractor({ ...tractor, make: text })}
-        otherStyles='mt-10'
+        otherStyles='mt-'
       />
       <FormField
         title='Model'
         value={tractor.model}
         placeholder='Enter model'
         handleChangeText={(text) => setTractor({ ...tractor, model: text })}
-        otherStyles='mt-10'
+        otherStyles='mt-4'
       />
       <FormField
         title='Price'
@@ -152,34 +160,42 @@ const EditTractorScreen = () => {
         placeholder='Enter price'
         handleChangeText={(text) => setTractor({ ...tractor, price: text })}
         keyboardType='numeric'
-        otherStyles='mt-10'
+        otherStyles='mt-4'
       />
       <FormField
         title='Region'
         value={tractor.region}
         placeholder='Enter region'
         handleChangeText={(text) => setTractor({ ...tractor, region: text })}
-        otherStyles='mt-10'
+        otherStyles='mt-4'
       />
       <FormField
         title='District'
         value={tractor.district}
         placeholder='Enter district'
         handleChangeText={(text) => setTractor({ ...tractor, district: text })}
-        otherStyles='mt-10'
+        otherStyles='mt-4'
       />
       <FormField
         title='Village'
         value={tractor.village}
         placeholder='Enter village'
         handleChangeText={(text) => setTractor({ ...tractor, village: text })}
-        otherStyles='mt-10 mb-10'
+        otherStyles='mt-4 mb-10'
       />
       <CustomButton
         title='Update Tractor'
         handlePress={handleUpdate}
         isLoading={isUpdating}
+        otherStyles='mb-4'
       />
+      <View className='flex flex-row justify-center items-center mt-2 p-4'>
+        <TouchableOpacity>
+          <Text className='font-pregular text-base text-danger'>
+            Delete Tractor
+          </Text>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };

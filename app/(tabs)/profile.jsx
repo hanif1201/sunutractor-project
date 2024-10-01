@@ -101,14 +101,16 @@ const profile = () => {
           </View>
 
           <View className='p-2 '>
-            <Image
-              source={icons.arrowleft}
-              resizeMode='contain'
-              style={{ width: 20, height: 20, tintColor: "#292D32" }}
-            />
+            <TouchableOpacity onPress={submit}>
+              <Image
+                source={icons.edit}
+                resizeMode='contain'
+                style={{ width: 20, height: 20, tintColor: "#292D32" }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
-        <View className='border rounded-lg border-lightDark w-full flex flex-col space-y-2 items-start mt-5 p-4'>
+        <View className='border rounded-lg border-lightDark w-full flex flex-col space-y-6 items-start mt-5 p-4'>
           {/* 000 */}
           <TouchableOpacity
             onPress={() => router.push("/tractor/UserTractorsScreen")}
@@ -128,11 +130,13 @@ const profile = () => {
           >
             <View className='flex flex-row items-center'>
               <Image
-                source={icons.arrowleft}
+                source={icons.messageQuestion}
                 resizeMode='contain'
                 style={{ width: 20, height: 20, tintColor: "#292D32" }}
               />
-              <Text className='font-pregular text-base ml-3'>My Tractors</Text>
+              <Text className='font-pregular text-base ml-3'>
+                Help & Support
+              </Text>
             </View>
           </TouchableOpacity>
           {/* 000 */}
@@ -141,11 +145,13 @@ const profile = () => {
           >
             <View className='flex flex-row items-center'>
               <Image
-                source={icons.arrowleft}
+                source={icons.shield}
                 resizeMode='contain'
                 style={{ width: 20, height: 20, tintColor: "#292D32" }}
               />
-              <Text className='font-pregular text-base ml-3'>My Tractors</Text>
+              <Text className='font-pregular text-base ml-3'>
+                Terms of Service
+              </Text>
             </View>
           </TouchableOpacity>
           {/* 000 */}
@@ -154,11 +160,13 @@ const profile = () => {
           >
             <View className='flex flex-row items-center'>
               <Image
-                source={icons.arrowleft}
+                source={icons.infoCircle}
                 resizeMode='contain'
                 style={{ width: 20, height: 20, tintColor: "#292D32" }}
               />
-              <Text className='font-pregular text-base ml-3'>My Tractors</Text>
+              <Text className='font-pregular text-base ml-3'>
+                Privacy Policy
+              </Text>
             </View>
           </TouchableOpacity>
           {/* 000 */}
@@ -167,11 +175,11 @@ const profile = () => {
           >
             <View className='flex flex-row items-center'>
               <Image
-                source={icons.arrowleft}
+                source={icons.starr}
                 resizeMode='contain'
                 style={{ width: 20, height: 20, tintColor: "#292D32" }}
               />
-              <Text className='font-pregular text-base ml-3'>My Tractors</Text>
+              <Text className='font-pregular text-base ml-3'>Rate Us</Text>
             </View>
           </TouchableOpacity>
           {/* 000 */}
@@ -180,24 +188,13 @@ const profile = () => {
           >
             <View className='flex flex-row items-center'>
               <Image
-                source={icons.arrowleft}
+                source={icons.share}
                 resizeMode='contain'
                 style={{ width: 20, height: 20, tintColor: "#292D32" }}
               />
-              <Text className='font-pregular text-base ml-3'>My Tractors</Text>
-            </View>
-          </TouchableOpacity>
-          {/* 000 */}
-          <TouchableOpacity
-            onPress={() => router.push("/tractor/UserTractorsScreen")}
-          >
-            <View className='flex flex-row items-center'>
-              <Image
-                source={icons.arrowleft}
-                resizeMode='contain'
-                style={{ width: 20, height: 20, tintColor: "#292D32" }}
-              />
-              <Text className='font-pregular text-base ml-3'>My Tractors</Text>
+              <Text className='font-pregular text-base ml-3'>
+                Share the App
+              </Text>
             </View>
           </TouchableOpacity>
         </View>

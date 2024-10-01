@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import CustomButton from "../../components/CustomButton";
 import {
   getTractorsByUser,
   getCurrentUser,
@@ -37,64 +38,28 @@ const TractorItem = ({ tractor, onDelete }) => {
   };
 
   return (
-    <View className='w-full  min-h-[300px] m-1 border-black border-2'>
-      <Image
-        source={{ uri: tractor.thumbnail }}
-        className='w-full h-52 rounded'
-      />
+    <View className='w-full  min-h-[300px] m-1 border-grey border rounded-2xl'>
+      <View className='p-1'>
+        <Image
+          source={{ uri: tractor.thumbnail }}
+          className='w-full h-52 rounded-2xl '
+        />
+      </View>
       <View className='flex flex-row justify-between items-center pr-2'>
-        <Text className='text-start mt-1 font-psemibold text-lg w-4/5'>
+        <Text className='text-start mt-1 pl-1 font-pmedium text-base w-4/5'>
           {tractor.make} {tractor.model}
         </Text>
-        <Image
-          source={icons.heart}
-          resizeMode='contain'
-          style={{ width: 24, height: 24, tintColor: "#000" }}
-        />
-      </View>
-      <View>
-        <Text className='text-start mt-1 font-pbold text-sm'>
-          {tractor.price}/hr
+        <Text className='text-start mt-1 font-psemibold text-sm text-primary'>
+          {tractor.price} UGS
+          <Text className='text-grey font-pregular'>/day</Text>
         </Text>
       </View>
-      <View className='flex flex-row items-center'>
-        <Image
-          source={icons.location}
-          resizeMode='contain'
-          style={{ width: 16, height: 16, tintColor: "#000" }}
-        />
-        <Text className='text-start mt-1 font-pbold text-sm'>
-          {tractor.region}
-          {tractor.district}
-          {tractor.village}
-        </Text>
-      </View>
-      <View className='flex flex-row justify-between items-center'>
-        <TouchableOpacity
-          key={tractor.id}
-          onPress={handleEdit}
-          activeOpacity={0.7}
-          className='bg-primary rounded-md min-h-[42px] w-1/3  mt-4 py-2 mx-1 mb-1 '
-        >
-          <Text className={`text-white font-psemibold text-center `}>
-            Edit Detail
-          </Text>
-          {/* <ActivityIndicator color='#fff' size='small' className='ml-2' /> */}
-        </TouchableOpacity>
 
-        {/* Delete Button */}
-        <TouchableOpacity
-          key={tractor.id}
-          onPress={handleDelete}
-          activeOpacity={0.7}
-          className='bg-danger rounded-md min-h-[42px] w-1/3 mt-4 py-2 mx-1 mb-1 '
-        >
-          <Text className={`text-white font-psemibold text-center `}>
-            Delete Tractor
-          </Text>
-          {/* <ActivityIndicator color='#fff' size='small' className='ml-2' /> */}
-        </TouchableOpacity>
-      </View>
+      <CustomButton
+        title='Edit tractor'
+        containerStyles='mt-7 mb-4 mx-3'
+        handlePress={handleEdit}
+      />
     </View>
   );
 };
@@ -151,16 +116,16 @@ const UserTractorsScreen = () => {
 
   return (
     <SafeAreaView className=' mt-12  h-full '>
-      <View className='ml-5'>
-        <Image
-          source={icons.leftArrow}
-          resizeMode='contain'
-          style={{ width: 30, height: 30, tintColor: "#000" }}
-        />
+      <View className='ml-5 mb-5 flex flex-row items-center'>
+        <View className='p-2 border-lightDark rounded-lg border-2'>
+          <Image
+            source={icons.arrowleft}
+            resizeMode='contain'
+            style={{ width: 20, height: 20, tintColor: "#292D32" }}
+          />
+        </View>
+        <Text className='font-pmedium text-lg ml-4'>My tractors</Text>
       </View>
-      <Text className='text-2xl text-primary font-psemibold mt-4 text-center'>
-        My Listed Tractors
-      </Text>
       <FlatList
         data={tractors}
         renderItem={({ item }) => (

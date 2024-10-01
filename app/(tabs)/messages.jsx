@@ -8,10 +8,13 @@ import {
   SafeAreaView,
   ActivityIndicator,
   Image, // Import Image
+  TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getChatRooms, getUserById } from "../../lib/appwrite"; // Import the function to get user by ID
 import { useGlobalContext } from "../../context/GlobalProvider"; // Import the context
+import CustomInput from "../../components/CustomInput";
+import icons from "../../constants/icons";
 
 const ChatListScreen = () => {
   const { user, loading } = useGlobalContext(); // Access user and loading state from context
@@ -82,6 +85,21 @@ const ChatListScreen = () => {
 
   return (
     <SafeAreaView className=' mt-12  h-full '>
+      <View className='flex-row items-center border border-grey rounded-full p-2 mx-4'>
+        <Image
+          source={icons.searchnormal} // Replace with your icon source
+          className='w-5 h-5 mr-2' // Adjust size and margin as needed
+          style={{ tintColor: "grey" }}
+        />
+        <TextInput
+          placeholder={"Search Messages"}
+          value={""}
+          // onChangeText={}
+          className='flex-1 text-white' // Allow the TextInput to take the remaining space
+          style={{ padding: 0, tintColor: "white" }} // Remove default padding
+          placeholderTextColor='grey' // Change placeholder text color here
+        />
+      </View>
       <View style={styles.container}>
         <FlatList
           data={chatRooms}
@@ -96,7 +114,13 @@ const ChatListScreen = () => {
 
             return (
               <TouchableOpacity
-                onPress={() => navigateToChat(item.$id)}
+                onPress={() =>
+                  navigateToChat(
+                    item.$id,
+                    otherParticipantAvatar,
+                    otherParticipantName
+                  )
+                }
                 style={styles.chatRoom}
               >
                 <View style={styles.chatRoomContent}>
