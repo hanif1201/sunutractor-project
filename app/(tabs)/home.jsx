@@ -73,7 +73,7 @@ const home = () => {
                     Your Location
                   </Text>
                   <Text className='text-base font-psemibold text-white'>
-                    Uganda, Africa
+                    Gambia, Africa
                   </Text>
                 </View>
               </View>
