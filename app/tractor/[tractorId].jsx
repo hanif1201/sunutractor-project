@@ -5,6 +5,8 @@ import {
   ScrollView,
   SafeAreaView,
   ActivityIndicator,
+  TouchableOpacity,
+  Alert,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import icons from "../../constants/icons";
@@ -106,11 +108,13 @@ const TractorDetailsScreen = () => {
       >
         <View className='flex flex-row items-center'>
           <View className='p-2 border-lightDark rounded-lg border-2'>
-            <Image
-              source={icons.arrowleft}
-              resizeMode='contain'
-              style={{ width: 20, height: 20, tintColor: "#292D32" }}
-            />
+            <TouchableOpacity onPress={handleBackToHome}>
+              <Image
+                source={icons.arrowleft}
+                resizeMode='contain'
+                style={{ width: 20, height: 20, tintColor: "#292D32" }}
+              />
+            </TouchableOpacity>
           </View>
           <Text className='font-pmedium text-lg ml-4'>Tractor Details</Text>
         </View>

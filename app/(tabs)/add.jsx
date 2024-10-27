@@ -20,9 +20,11 @@ import { location } from "../../data/location";
 import icons from "../../constants/icons";
 import CustomButton from "../../components/CustomButton";
 import { createTractor } from "../../lib/appwrite";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const add = () => {
   const [uploading, setUploading] = useState(false);
+  const navigation = useNavigation();
   const [form, setForm] = useState({
     make: "",
     model: "",
@@ -38,6 +40,9 @@ const add = () => {
     operatorPhone: "",
     operatorEmail: "",
   });
+  const handleBack = () => {
+    navigation.goBack();
+  };
 
   const openPicker = async (selectType) => {
     const result = await DocumentPicker.getDocumentAsync({
@@ -165,11 +170,13 @@ const add = () => {
     <SafeAreaView className='bg-white h-full'>
       <View className=' mb-5 mt-5 ml-4 flex flex-row items-center'>
         <View className='p-2 border-lightDark rounded-lg border-2'>
-          <Image
-            source={icons.arrowleft}
-            resizeMode='contain'
-            style={{ width: 20, height: 20, tintColor: "#292D32" }}
-          />
+          <TouchableOpacity onPress={handleBack}>
+            <Image
+              source={icons.arrowleft}
+              resizeMode='contain'
+              style={{ width: 20, height: 20, tintColor: "#292D32" }}
+            />
+          </TouchableOpacity>
         </View>
         <Text className='font-pmedium text-lg ml-4'>
           List a Tractor for rent

@@ -26,6 +26,7 @@ const profile = () => {
   const [tractorCount, setTractorCount] = useState(0);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -33,6 +34,7 @@ const profile = () => {
         const userData = await getCurrentUser();
         setUserName(userData.username || "User");
         setEmail(userData.email || "Email");
+        setPhone(userData.phone || "Phone");
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -96,7 +98,7 @@ const profile = () => {
             <View className='ml-4 space-y-1'>
               <Text className='font-psemibold text-base'>{userName}</Text>
               <Text className='font-pregular text-xs'>{email}</Text>
-              <Text className='font-pregular text-sm'>+1 234 567 8900</Text>
+              <Text className='font-pregular text-sm'>{phone}</Text>
             </View>
           </View>
 

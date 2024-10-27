@@ -7,10 +7,12 @@ import {
   TouchableOpacity,
   StyleSheet,
   Image,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import images from "../../constants/images";
 import icons from "../../constants/icons";
+
 import {
   getMessages,
   sendMessage,
@@ -23,6 +25,7 @@ import { useNavigation, useRoute } from "@react-navigation/native"; // Import us
 const ChatScreen = () => {
   const route = useRoute(); // Get the route object
   const { chatRoomId, currentUserId, ownerName, ownerAvatar } = route.params; // Access params from route
+  const navigation = useNavigation();
 
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState("");
@@ -70,16 +73,21 @@ const ChatScreen = () => {
       </Text>
     </View>
   );
+  const handleBack = () => {
+    navigation.goBack();
+  };
 
   return (
     <>
       <View className='flex flex-row items-center my-10 mx-5 '>
         <View className='p-2 border-lightDark rounded-lg border-2'>
-          <Image
-            source={icons.arrowleft}
-            resizeMode='contain'
-            style={{ width: 20, height: 20, tintColor: "#292D32" }}
-          />
+          <TouchableOpacity onPress={handleBack}>
+            <Image
+              source={icons.arrowleft}
+              resizeMode='contain'
+              style={{ width: 20, height: 20, tintColor: "#292D32" }}
+            />
+          </TouchableOpacity>
         </View>
 
         <View className='flex flex-row items-center space-x-2 rounded-lg justify-center ml-2'>
