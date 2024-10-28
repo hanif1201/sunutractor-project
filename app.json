@@ -21,7 +21,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.hanif1201.sunutractorproject"
+      "package": "com.hanif1201.sunutractorproject",
+      "versionCode": 2
     },
     "web": {
       "bundler": "metro",
