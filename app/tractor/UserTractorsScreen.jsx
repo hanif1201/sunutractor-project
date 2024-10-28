@@ -37,6 +37,13 @@ const TractorItem = ({ tractor, onDelete }) => {
       console.error("Error deleting tractor:", error);
     }
   };
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("en-GM", {
+      style: "currency",
+      currency: "GMD",
+      minimumFractionDigits: 2,
+    }).format(price);
+  };
 
   return (
     <View className='w-full  min-h-[300px] m-1 border-grey border rounded-2xl'>
@@ -51,7 +58,7 @@ const TractorItem = ({ tractor, onDelete }) => {
           {tractor.make} {tractor.model}
         </Text>
         <Text className='text-start mt-1 font-psemibold text-sm text-primary'>
-          {tractor.price} UGS
+          {formatPrice(tractor.price)}
           <Text className='text-grey font-pregular'>/day</Text>
         </Text>
       </View>

@@ -92,6 +92,15 @@ const TractorDetailsScreen = () => {
       Alert.alert("Error", "Could not create or find chat room.");
     }
   };
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("en-GM", {
+      style: "currency",
+      currency: "GMD",
+      minimumFractionDigits: 2,
+    }).format(price);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {/* Fixed Header */}
@@ -152,7 +161,7 @@ const TractorDetailsScreen = () => {
               {tractorDetails.make} {tractorDetails.model}
             </Text>
             <Text className='mt-1 font-psemibold text-2xl text-primary'>
-              {tractorDetails.price} UGS
+              {formatPrice(tractorDetails.price)}
               <Text className='text-grey font-pregular'>/day</Text>
             </Text>
           </View>

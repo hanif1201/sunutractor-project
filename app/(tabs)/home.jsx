@@ -91,6 +91,14 @@ const home = () => {
       setSearchResult(null);
     }
   };
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("en-GM", {
+      style: "currency",
+      currency: "GMD",
+      minimumFractionDigits: 2,
+    }).format(price);
+  };
   return (
     <SafeAreaView className=' mt-6  h-full '>
       <View className='border-b border-grey'>
@@ -184,7 +192,7 @@ const home = () => {
                   {searchResult.make} {searchResult.model}
                 </Text>
                 <Text className='text-start mt-1 font-psemibold text-sm text-primary'>
-                  {searchResult.price} UGS
+                  {formatPrice(searchResult.price)}
                   <Text className='text-grey font-pregular'>/day</Text>
                 </Text>
               </View>
@@ -242,7 +250,7 @@ const home = () => {
                     {tractor.make} {tractor.model}
                   </Text>
                   <Text className='text-start mt-1 font-psemibold text-sm text-primary'>
-                    {tractor.price} UGS
+                    {formatPrice(tractor.price)}
                     <Text className='text-grey font-pregular'>/day</Text>
                   </Text>
                 </View>
