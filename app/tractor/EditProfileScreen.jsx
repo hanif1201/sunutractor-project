@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Alert,
 } from "react-native";
 import {
   getUser,
@@ -21,6 +22,12 @@ import { useNavigation } from "@react-navigation/native";
 import Loader from "../../components/Loader";
 
 const EditProfileScreen = () => {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState(""); // Required for email update
+  const [updating, setUpdating] = useState(false);
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -30,7 +37,11 @@ const EditProfileScreen = () => {
     const fetchUser = async () => {
       try {
         const fetchedUser = await getCurrentUser();
+        console.log("Fetched User:", fetchedUser); // Debugging line
         setUser(fetchedUser);
+        setEmail(fetchedUser.email || ""); // Initialize state
+        setUsername(fetchedUser.username || ""); // Initialize state
+        setPhone(fetchedUser.phone || ""); // Initialize state
       } catch (err) {
         setError(err.message);
       } finally {
@@ -42,14 +53,29 @@ const EditProfileScreen = () => {
   }, []);
 
   const handleUpdate = async () => {
+    setUpdating(true); // Start updating
     try {
-      if (!user) {
-        throw new Error("No user data available");
+      const userData = {
+        email: email, // Use the current state value
+        username: username, // Use the current state value
+        phone: phone, // Use the current state value
+      };
+
+      console.log("Updating user with data:", userData); // Debugging line
+
+      await updateUserProfile(userData); // Remove password parameter if not needed
+      Alert.alert("Success", "User details updated successfully");
+    } catch (error) {
+      if (error.message.includes("email is already in use")) {
+        Alert.alert(
+          "Error",
+          "The email address is already associated with another account."
+        );
+      } else {
+        Alert.alert("Error", error.message);
       }
-      await updateUserProfile(user);
-      router.back();
-    } catch (err) {
-      setError(err.message);
+    } finally {
+      setUpdating(false); // End updating
     }
   };
 
@@ -72,41 +98,35 @@ const EditProfileScreen = () => {
       <Text className='text-2xl text-primary font-psemibold mt-4 text-center'>
         Edit your Profile
       </Text>
-      {/* <FormField
-                title='Operator Name'
-                value={form.operatorName}
-                placeholder="Kindly fill in the Operator's name"
-                handleChangeText={(e) => setForm({ ...form, operatorName: e })}
-        otherStyles='mt-10'
-      /> */}
 
       <FormField
         title='Name'
-        value={user.username || ""}
+        value={username} // Use state variable
         placeholder='Enter your name'
-        handleChangeText={(text) => setUser({ ...user, name: text })}
+        handleChangeText={setUsername} // Update state directly
         otherStyles='mt-10'
       />
       <FormField
         title='Email'
-        value={user.email || ""}
+        value={email} // Use state variable
         placeholder='Enter your email'
-        handleChangeText={(text) => setUser({ ...user, email: text })}
+        handleChangeText={setEmail} // Update state directly
         keyboardType='email-address'
         otherStyles='mt-10'
       />
       <FormField
         title='Phone'
-        value={user.phone || ""}
+        value={phone} // Use state variable
         placeholder='Enter your phone number'
-        handleChangeText={(text) => setUser({ ...user, phone: text })}
+        handleChangeText={setPhone} // Update state directly
         keyboardType='phone-pad'
         otherStyles='mb-10 mt-10'
       />
+
       <CustomButton
         title='Update Profile'
         handlePress={handleUpdate}
-        isLoading={false} // Add a state variable if you want to show loading state
+        isLoading={updating}
       />
     </ScrollView>
   );

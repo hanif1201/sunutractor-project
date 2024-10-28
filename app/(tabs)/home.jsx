@@ -7,11 +7,12 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
+  RefreshControl,
   ActivityIndicator,
   ImageBackground,
 } from "react-native";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CustomInput from "../../components/CustomInput";
 
 // import heart from "../../assets/icons/heart-regular.png";
@@ -26,16 +27,35 @@ import tractorImage from "../../assets/images/tractor.png"; // Adjust the path a
 import CustomButton from "../../components/CustomButton";
 
 const home = () => {
-  const { data: tractors, refetch } = useAppwrite(getAllTractors);
   const image = {};
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [searchResult, setSearchResult] = useState(null); // State for search result
-
+  const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
   const [activeCategory, setActiveCategory] = useState(null); // State for active category
+  const [tractors, setTractors] = useState([]);
 
   const handlePress = (id) => {
     navigation.navigate("TractorDetailsScreen", { id });
+  };
+  useEffect(() => {
+    fetchTractors();
+  }, []);
+
+  const fetchTractors = async () => {
+    try {
+      const data = await getAllTractors();
+      setTractors(data);
+    } catch (error) {
+      console.error("Error fetching tractors:", error);
+      Alert.alert("Error", "Failed to load tractors.");
+    }
+  };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchTractors();
+    setRefreshing(false);
   };
 
   const categories = [
@@ -144,7 +164,12 @@ const home = () => {
         </ScrollView>
       </View>
 
-      <ScrollView className='px-4'>
+      <ScrollView
+        className='px-4'
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View className='flex flex-row flex-wrap justify-around mt-4 mb-40'>
           {searchResult ? (
             <View className='w-full min-h-[300px] m-1 border-grey border rounded-2xl'>

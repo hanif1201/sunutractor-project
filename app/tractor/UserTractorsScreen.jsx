@@ -17,6 +17,7 @@ import {
 } from "../../lib/appwrite";
 import Loader from "../../components/Loader";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { router } from "expo-router";
 
 import icons from "../../constants/icons";
 
@@ -118,11 +119,13 @@ const UserTractorsScreen = () => {
     <SafeAreaView className=' mt-12  h-full '>
       <View className='ml-5 mb-5 flex flex-row items-center'>
         <View className='p-2 border-lightDark rounded-lg border-2'>
-          <Image
-            source={icons.arrowleft}
-            resizeMode='contain'
-            style={{ width: 20, height: 20, tintColor: "#292D32" }}
-          />
+          <TouchableOpacity onPress={() => router.back()}>
+            <Image
+              source={icons.arrowleft}
+              resizeMode='contain'
+              style={{ width: 20, height: 20, tintColor: "#292D32" }}
+            />
+          </TouchableOpacity>
         </View>
         <Text className='font-pmedium text-lg ml-4'>My tractors</Text>
       </View>

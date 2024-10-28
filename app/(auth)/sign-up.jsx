@@ -23,6 +23,7 @@ const SignUp = () => {
     username: "",
     email: "",
     password: "",
+    phone: "",
   });
   const submit = async () => {
     if (form.username === "" || form.email === "" || form.password === "") {
@@ -31,7 +32,12 @@ const SignUp = () => {
 
     setSubmitting(true);
     try {
-      const result = await createUser(form.email, form.password, form.username);
+      const result = await createUser(
+        form.email,
+        form.password,
+        form.username,
+        form.phone
+      );
       setUser(result);
       setIsLogged(true);
 
@@ -77,6 +83,13 @@ const SignUp = () => {
             handleChangeText={(e) => setForm({ ...form, email: e })}
             otherStyles='mt-7'
             keyboardType='email-address'
+          />
+          <FormField
+            title='Phone'
+            value={form.phone}
+            handleChangeText={(e) => setForm({ ...form, phone: e })}
+            otherStyles='mt-7'
+            keyboardType='phone-pad'
           />
 
           <FormField

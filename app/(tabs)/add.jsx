@@ -31,6 +31,7 @@ const add = () => {
     thumbnail: null,
     powerSource: "",
     transmission: "",
+    category: "",
 
     location: null,
     isAvailable: false,
@@ -69,6 +70,7 @@ const add = () => {
   const [hasHireOperating, setHasHireOperating] = useState(null);
   const [sunuTractorOperator, setSunuTractorOperator] = useState(null);
   const [ownerOperator, setOwnerOperator] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const submit = async () => {
     if (isSubmitting) return;
     try {
@@ -80,6 +82,7 @@ const add = () => {
         thumbnail: form.thumbnail,
         powerSource: form.powerSource,
         transmission: form.transmission,
+        category: selectedCategory,
         // location: form.location,
         isAvailable: form.isAvailable,
         price: form.price,
@@ -95,8 +98,8 @@ const add = () => {
 
       const newTractor = await createTractor(tractorData); // Call the createTractor function
       // console.log(newTractor);
-      Alert.alert("Success", "Post uploaded successfully");
-      router.push("/home");
+      Alert.alert("Success", "Tractor uploaded successfully");
+      router.push("/tractor/UserTractorsScreen");
 
       // Redirect to the tractors list page or display a success message
     } catch (error) {
@@ -109,6 +112,7 @@ const add = () => {
         thumbnail: null,
         powerSource: "",
         transmission: "",
+        category: "",
         location: null,
         isAvailable: false,
         price: "",
@@ -164,6 +168,17 @@ const add = () => {
   const operatorHireOptions = [
     { label: "Yes", value: "yes" },
     { label: "No", value: "no" },
+  ];
+
+  const categories = [
+    { label: "Agricultural tractors", value: "Agricultural tractors" },
+    { label: "Industrial tractors", value: "Industrial tractors" },
+    { label: "Garden tractors", value: "Garden tractors" },
+    { label: "Rotary tillers", value: "Rotary tillers" },
+    { label: "Compact tractors", value: "Compact tractors" },
+    { label: "Row crop tractors", value: "Row crop tractors" },
+    { label: "Orchard tractors", value: "Orchard tractors" },
+    { label: "Loader tractors", value: "Loader tractors" },
   ];
 
   return (
@@ -239,6 +254,24 @@ const add = () => {
             handleChangeText={(e) => setForm({ ...form, transmission: e })}
             otherStyles='mt-4'
           />
+
+          <View>
+            <Text className='font-pregular text-base mb-2'>
+              Tractor Category :
+            </Text>
+            <Dropdown
+              data={categories}
+              labelField='label'
+              valueField='value'
+              placeholder='Select Option'
+              value={selectedCategory}
+              onChange={(item) => setSelectedCategory(item.value)}
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              containerStyle={styles.dropdownContainer}
+            />
+          </View>
 
           <FormField
             title='Rental Price :'

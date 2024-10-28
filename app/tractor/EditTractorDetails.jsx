@@ -8,7 +8,12 @@ import {
   Alert,
 } from "react-native";
 import Loader from "../../components/Loader";
-import { getTractor, updateTractor, uploadFile } from "../../lib/appwrite";
+import {
+  getTractor,
+  updateTractor,
+  uploadFile,
+  deleteTractor,
+} from "../../lib/appwrite";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
@@ -59,6 +64,42 @@ const EditTractorScreen = () => {
           err.message
       );
     }
+  };
+
+  const handleDelete = async () => {
+    Alert.alert(
+      "Delete",
+      "Are you sure you want to delete this tractor?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: async () => {
+            try {
+              const tractorId = route.params?.tractorId;
+              if (!tractorId) {
+                throw new Error("No tractor ID provided");
+              }
+
+              await deleteTractor(tractorId); // Call the delete function
+
+              Alert.alert("Success", "Tractor deleted successfully");
+              navigation.goBack(); // Navigate back to the previous screen
+            } catch (error) {
+              console.error("Error deleting tractor:", error);
+              Alert.alert(
+                "Error",
+                "Failed to delete tractor. Please try again."
+              );
+            }
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   const handleUpdate = async () => {
@@ -190,7 +231,7 @@ const EditTractorScreen = () => {
         otherStyles='mb-4'
       />
       <View className='flex flex-row justify-center items-center mt-2 p-4'>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleDelete}>
           <Text className='font-pregular text-base text-danger'>
             Delete Tractor
           </Text>
