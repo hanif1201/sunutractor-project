@@ -99,6 +99,12 @@ const home = () => {
       minimumFractionDigits: 2,
     }).format(price);
   };
+
+  const filteredTractors =
+    activeCategory === "All"
+      ? tractors
+      : tractors.filter((tractor) => tractor.category === activeCategory);
+
   return (
     <SafeAreaView className=' mt-6  h-full '>
       <View className='border-b border-grey'>
@@ -122,7 +128,7 @@ const home = () => {
                     Your Location
                   </Text>
                   <Text className='text-base font-psemibold text-white'>
-                    Gambia, Africaaa
+                    Gambia, Africa
                   </Text>
                 </View>
               </View>
@@ -233,7 +239,7 @@ const home = () => {
               </View>
             </View>
           ) : (
-            tractors.map((tractor, index) => (
+            filteredTractors.map((tractor, index) => (
               <View
                 key={index}
                 className='w-full  min-h-[300px] m-1 border-grey border rounded-2xl'

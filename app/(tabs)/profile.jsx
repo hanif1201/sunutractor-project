@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { router } from "expo-router";
@@ -27,7 +28,7 @@ const profile = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-
+  const [refreshing, setRefreshing] = useState(false);
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -85,9 +86,27 @@ const profile = () => {
   const submit = () => {
     router.push("/tractor/EditProfileScreen");
   };
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    try {
+      const userData = await getCurrentUser();
+      setUserName(userData.username || "User");
+      setEmail(userData.email || "Email");
+      setPhone(userData.phone || "Phone");
+    } catch (error) {
+      console.error("Error refreshing user data:", error);
+    }
+    setRefreshing(false);
+  };
   return (
     <SafeAreaView className=' mt-12  h-full '>
-      <ScrollView className='px-4'>
+      <ScrollView
+        className='px-4'
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <Text className='font-pmedium text-lg text-center'>My Account</Text>
         <View className='border rounded-lg border-lightDark w-full flex flex-row justify-between items-center mt-5 p-4'>
           <View className=' flex flex-row justify-between items-center'>
