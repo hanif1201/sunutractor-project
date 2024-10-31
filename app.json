@@ -22,7 +22,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.hanif1201.sunutractorproject",
-      "versionCode": 2
+      "versionCode": 3
     },
     "web": {
       "bundler": "metro",
