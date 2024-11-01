@@ -1,6 +1,7 @@
 import React from "react";
 import { useGlobalContext } from "../../context/GlobalProvider";
 import { getFavoriteTractors, getTractorById } from "../../lib/appwrite";
+import CustomButton from "../../components/CustomButton";
 import {
   StyleSheet,
   Text,
@@ -45,17 +46,37 @@ const Favourites = () => {
   if (loading) {
     return <Text>Loading...</Text>; // Or a loading spinner
   }
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat("en-GM", {
+      style: "currency",
+      currency: "GMD",
+      minimumFractionDigits: 2,
+    }).format(price);
+  };
 
   const renderTractor = ({ item }) => (
-    <View style={styles.tractorItem}>
-      <Text style={styles.tractorName}>
-        {item.make} {item.model}
-      </Text>
-      <Image source={{ uri: item.thumbnail }} style={styles.tractorImage} />
-      <Text style={styles.tractorDetails}>Price: ${item.price}</Text>
-      <Text style={styles.tractorDetails}>
-        Location: {item.village}, {item.district}
-      </Text>
+    <View className='w-full  min-h-[300px] m-1 border-grey border rounded-2xl'>
+      <View className='p-1'>
+        <Image
+          source={{ uri: item.thumbnail }}
+          className='w-full h-52 rounded-2xl '
+        />
+      </View>
+      <View className='flex flex-row justify-between items-center pr-2'>
+        <Text className='text-start mt-1 pl-1 font-pmedium text-base w-4/5'>
+          {item.make} {item.model}
+        </Text>
+        <Text className='text-start mt-1 font-psemibold text-sm text-primary'>
+          {formatPrice(item.price)}
+          <Text className='text-grey font-pregular'>/day</Text>
+        </Text>
+      </View>
+
+      <CustomButton
+        title='Edit tractor'
+        containerStyles='mt-7 mb-4 mx-3'
+        handlePress={handleEdit}
+      />
     </View>
   );
 
