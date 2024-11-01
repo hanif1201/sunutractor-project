@@ -49,7 +49,7 @@ const home = () => {
   const [searchResult, setSearchResult] = useState(null); // State for search result
   const [refreshing, setRefreshing] = useState(false);
   const navigation = useNavigation();
-  const [activeCategory, setActiveCategory] = useState(null); // State for active category
+  const [activeCategory, setActiveCategory] = useState("All"); // State for active category
   const [tractors, setTractors] = useState([]);
 
   const handlePress = (id) => {
