@@ -12,10 +12,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import images from "../../constants/images";
-
+import { useNavigation } from "@react-navigation/native";
 const Favourites = () => {
   const { user, loading } = useGlobalContext();
   const [favoriteTractors, setFavoriteTractors] = React.useState([]);
+  const navigation = useNavigation();
 
   React.useEffect(() => {
     if (user) {
@@ -73,9 +74,14 @@ const Favourites = () => {
       </View>
 
       <CustomButton
-        title='Edit tractor'
-        containerStyles='mt-7 mb-4 mx-3'
-        handlePress={handleEdit}
+        title='BOOK NOW'
+        handlePress={() =>
+          navigation.navigate("tractor/[tractorId]", {
+            documentId: item.$id, // Pass the document ID
+          })
+        }
+        containerStyles=' px-4'
+        // isLoading={isSubmitting}
       />
     </View>
   );
