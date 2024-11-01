@@ -37,6 +37,8 @@ import infoCircle from "../assets/icons/info-circle.png";
 import starr from "../assets/icons/star.png";
 import share from "../assets/icons/share.png";
 import edit from "../assets/icons/edit.png";
+import favoriteFilled from "../assets/icons/tabler_star-filled.png";
+import favoriteOutline from "../assets/icons/star.png";
 
 export default {
   play,
@@ -78,4 +80,6 @@ export default {
   starr,
   share,
   edit,
+  favoriteFilled,
+  favoriteOutline,
 };

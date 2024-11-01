@@ -21,13 +21,30 @@ import images from "../../constants/images";
 import { tractor } from "../../data/tractor";
 import { useNavigation } from "@react-navigation/native";
 import useAppwrite from "../../lib/useAppwrite";
-import { getAllTractors, getTractorByMakeAndModel } from "../../lib/appwrite";
+import {
+  getAllTractors,
+  getTractorByMakeAndModel,
+  toggleFavoriteTractor,
+  getFavoriteTractors,
+} from "../../lib/appwrite";
 import { createRouter } from "expo-router";
 import tractorImage from "../../assets/images/tractor.png"; // Adjust the path as necessary
 import CustomButton from "../../components/CustomButton";
+import { useGlobalContext } from "../../context/GlobalProvider"; // Adjust the path as necessary
 
 const home = () => {
   const image = {};
+  const { user, loading } = useGlobalContext(); // Access user and loading state
+  // Ensure user is available before making calls that require user ID
+  if (loading) {
+    return <Text>Loading...</Text>; // Or some other loading indicator
+  }
+
+  if (!user) {
+    return <Text>Please log in to view tractors.</Text>; // Handle unauthenticated state
+  }
+
+  const [favoriteTractors, setFavoriteTractors] = useState([]);
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [searchResult, setSearchResult] = useState(null); // State for search result
   const [refreshing, setRefreshing] = useState(false);
@@ -104,6 +121,29 @@ const home = () => {
     activeCategory === "All"
       ? tractors
       : tractors.filter((tractor) => tractor.category === activeCategory);
+
+  useEffect(() => {
+    const fetchFavoriteTractors = async () => {
+      try {
+        const favorites = await getFavoriteTractors(user.$id);
+        setFavoriteTractors(favorites);
+      } catch (error) {
+        console.error("Error fetching favorite tractors:", error);
+      }
+    };
+
+    fetchFavoriteTractors();
+  }, [user]);
+
+  const toggleFavorite = async (tractorId) => {
+    try {
+      await toggleFavoriteTractor(user.$id, tractorId);
+      const updatedFavorites = await getFavoriteTractors(user.$id);
+      setFavoriteTractors(updatedFavorites);
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  };
 
   return (
     <SafeAreaView className=' mt-6  h-full '>
@@ -245,16 +285,42 @@ const home = () => {
                 className='w-full  min-h-[300px] m-1 border-grey border rounded-2xl'
               >
                 <View className='p-1'>
-                  <Image
-                    source={{ uri: tractor.thumbnail }}
-                    className='w-full h-52 rounded-2xl '
-                  />
+                  <View style={{ position: "relative" }}>
+                    <Image
+                      source={{ uri: tractor.thumbnail }}
+                      className='w-full h-52 rounded-2xl'
+                    />
+                    <TouchableOpacity
+                      onPress={() => toggleFavorite(tractor.$id)}
+                      style={{
+                        position: "absolute",
+                        bottom: 10, // Adjust as needed
+                        left: 10, // Adjust as needed
+                        backgroundColor: "white",
+                        borderRadius: 30, // Half of the width/height to make it circular
+                        padding: 10, // Adjust padding to ensure the icon fits well
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Image
+                        source={
+                          favoriteTractors.includes(tractor.$id)
+                            ? icons.favoriteFilled
+                            : icons.favoriteOutline
+                        }
+                        resizeMode='contain'
+                        style={{ width: 25, height: 25, tintColor: "#FFC700" }}
+                      />
+                    </TouchableOpacity>
+                  </View>
                 </View>
 
                 <View className='flex flex-row justify-between items-center pr-2'>
                   <Text className='text-start mt-1 pl-1 font-pmedium text-base w-4/5'>
                     {tractor.make} {tractor.model}
                   </Text>
+
                   <Text className='text-start mt-1 font-psemibold text-sm text-primary'>
                     {formatPrice(tractor.price)}
                     <Text className='text-grey font-pregular'>/day</Text>
