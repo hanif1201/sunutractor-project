@@ -278,7 +278,8 @@ const add = () => {
             value={form.price}
             placeholder='What is the rental price for the tractor per hour?'
             handleChangeText={(e) => {
-              if (/^\d*$/.test(e)) {
+              // Allow only numbers and a single decimal point
+              if (/^\d*\.?\d*$/.test(e)) {
                 setForm({ ...form, price: e });
               }
             }}

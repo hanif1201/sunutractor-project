@@ -228,16 +228,41 @@ const home = () => {
           {searchResult ? (
             <View className='w-full min-h-[300px] m-1 border-grey border rounded-2xl'>
               <View className='p-1'>
-                <Image
-                  source={{ uri: searchResult.thumbnail }}
-                  className='w-full h-52 rounded-2xl '
-                />
+                <View style={{ position: "relative" }}>
+                  <Image
+                    source={{ uri: searchResult.thumbnail }}
+                    className='w-full h-52 rounded-2xl'
+                  />
+                  <TouchableOpacity
+                    onPress={() => toggleFavorite(searchResult.$id)}
+                    style={{
+                      position: "absolute",
+                      bottom: 10, // Adjust as needed
+                      left: 10, // Adjust as needed
+                      backgroundColor: "white",
+                      borderRadius: 30, // Half of the width/height to make it circular
+                      padding: 10, // Adjust padding to ensure the icon fits well
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Image
+                      source={
+                        favoriteTractors.includes(searchResult.$id)
+                          ? icons.favoriteFilled
+                          : icons.favoriteOutline
+                      }
+                      resizeMode='contain'
+                      style={{ width: 25, height: 25, tintColor: "#FFC700" }}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
               <View className='flex flex-row justify-between items-center pr-2'>
                 <Text className='text-start mt-1 pl-1 font-pmedium text-base w-4/5'>
                   {searchResult.make} {searchResult.model}
                 </Text>
-                <Text className='text-start mt-1 font-psemibold text-sm text-primary'>
+                <Text className='text-start mt-1 font-psemibold text-sm text-primary '>
                   {formatPrice(searchResult.price)}
                   <Text className='text-grey font-pregular'>/day</Text>
                 </Text>
