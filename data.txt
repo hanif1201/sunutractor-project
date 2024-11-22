@@ -2,7 +2,7 @@ Classified: Tractors can be classified by their intended use and whether they ha
 
 Agricultural tractors
 
-These tractors are comfortable and user-friendly, making them a good choice for large-scale farming.
+These tractors are comfortable and user-friendly, making them a good choice for -scale farming.
 
 Industrial tractors
 
